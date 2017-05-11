@@ -26,22 +26,22 @@
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="#">Home</a></li>
 							<li>
 								<a href="team.html">Team</a>
 								<ul>
 									<li>
-										<a href="#">Faculty</a>
+										<a href="team.html#faculty">Faculty</a>
 										<ul>
-											<li><a href="#">Dr. Jason P. Jue</a></li>
+											<li><a href="team.html#jason-p-jue">Dr. Jason P. Jue</a></li>
 										</ul>
 									</li>
 									<li>
-										<a href="#">Students</a>
+										<a href="team.html#students">Students</a>
 										<ul>
-											<li><a href="#">Undergraduate</a></li>
-											<li><a href="#">Graduate</a></li>
-											<li><a href="#">Alumni</a></li>
+											<li><a href="team.html?id=undergraduate#undergraduate">Undergraduate</a></li>
+											<li><a href="team.html?id=graduate#graduate">Graduate</a></li>
+											<li><a href="team.html?id=alumni#alumni">Alumni</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -49,12 +49,12 @@
 							<li>
 							<a href="publications.html">Publications</a>
 							<ul>
-								<li><a id="journal-nav" href="publications.html#journals" onClick="displaySection('journals')">Journal</a></li>
-								<li><a id="conference-nav" href="publications.html#conferences" onClick="displaySection('conferences')">Conference</a></li>
+								<li><a id="journal-nav" href='publications.html?id=journals#journals'>Journal</a></li>
+								<li><a id="conference-nav" href='publications.html?id=conferences#conferences'>Conference</a></li>
 							</ul>
 							</li>
-							<li><a href="#">Resources</a></li>
-							<li><a href="#">Contact</a></li>
+							<li><a href="resources.html">Resources</a></li>
+							<li><a href="contact.html">Contact</a></li>
 						</nav>
 
 				</div>
@@ -73,14 +73,25 @@
 									<iframe id="cal" src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=sfo70l9t1qff9oihvukegjbv58%40group.calendar.google.com&amp;color=%23BE6D00&amp;ctz=America%2FChicago" style="border-width:0" width="100%" height="370" frameborder="0" scrolling="no"></iframe>
 									<!-- <iframe id="smaller-cal" src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=sfo70l9t1qff9oihvukegjbv58%40group.calendar.google.com&amp;color=%23BE6D00&amp;ctz=America%2FChicago" style="border-width:0" width="100%" height="350" frameborder="0" scrolling="no"></iframe> -->
 									<footer>
-										<a href="https://calendar.google.com/calendar/render?cid=sfo70l9t1qff9oihvukegjbv58%40group.calendar.google.com#main_7" class="button" target="_blank">Learn More</a>
+										<a href="https://calendar.google.com/calendar/render?cid=sfo70l9t1qff9oihvukegjbv58%40group.calendar.google.com" class="button" target="_blank">Learn More</a>
 									</footer>
 								</section>
 								<hr />
 								<section>
 									<header>
-										<h3><a href="#">Quick Links</a></h3>
+										<h3>Quick Links</h3>
 									</header>
+									<div class="row 50%">
+										<div class="4u">
+											<a href="http://www.utdallas.edu/~jjue/" class="image fit" target="_blank"><img src="images/pic10.jpg" alt="" /></a>
+										</div>
+										<div class="8u">
+											<h4>Dr. Jason P. Jue's Page</h4>
+											<p>
+												Visit Dr. Jue's page.
+											</p>
+										</div>
+									</div>
 									<div class="row 50%">
 										<div class="4u">
 											<a href="https://engineering.utdallas.edu/" class="image fit" target="_blank"><img src="images/pic10.jpg" alt="" /></a>
@@ -96,6 +107,7 @@
 										<a href="#" class="button">Magna Adipiscing</a>
 									</footer> -->
 								</section>
+
 								<hr />
 								<section>
 									<header>
@@ -350,7 +362,6 @@
 			<script src="assets/js/main.js"></script>
 			<!-- Other -->
 			<script src="assets/js/responsive-cal.js"></script>
-			<script src="assets/js/accordion.js"></script>
 
 	</body>
 </html>

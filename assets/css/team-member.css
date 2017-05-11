@@ -1,0 +1,14 @@
+#image-container {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 2em;
+}
+
+#image-container img {
+  width: 20%;
+  display: inline-block;
+}
+
+.wrapper {
+  padding-top: 2em !important;
+}

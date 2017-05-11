@@ -1,0 +1,12 @@
+#documents-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#item {
+  background-color: silver;
+  min-width: 100px;
+  min-height: 100px;
+  margin: 10px;
+}

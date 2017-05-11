@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <link rel="stylesheet" href="assets/css/accordion.css" />
-    <link rel="stylesheet" href="assets/css/table.css" />
+    <link rel="stylesheet" href="assets/css/tiles.css" />
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -24,39 +24,39 @@
 							</header>
 						</div>
 
-					<!-- Nav -->
-          <nav id="nav">
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li>
-                <a href="team.html">Team</a>
-                <ul>
-                  <li>
-                    <a href="#">Faculty</a>
-                    <ul>
-                      <li><a href="#">Dr. Jason P. Jue</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Students</a>
-                    <ul>
-                      <li><a href="#">Undergraduate</a></li>
-                      <li><a href="#">Graduate</a></li>
-                      <li><a href="#">Alumni</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-              <a href="publications.html">Publications</a>
-              <ul>
-                <li><a id="journal-nav" href="publications.html#journals" onClick="displaySection('journals')">Journal</a></li>
-                <li><a id="conference-nav" href="publications.html#conferences" onClick="displaySection('conferences')">Conference</a></li>
-              </ul>
-              </li>
-              <li><a href="#">Resources</a></li>
-              <li><a href="#">Contact</a></li>
-            </nav>
+						<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li>
+									<a href="#">Team</a>
+									<ul>
+										<li>
+											<a href="#" onClick="getSection('faculty')">Faculty</a>
+											<ul>
+												<li><a href="#" onClick="getSection('jason-p-jue')">Dr. Jason P. Jue</a></li>
+											</ul>
+										</li>
+										<li>
+											<a href="#" onClick="getSection('students')">Students</a>
+											<ul>
+												<li><a href="#" onClick="getSection('undergraduate')">Undergraduate</a></li>
+												<li><a href="#" onClick="getSection('graduate')">Graduate</a></li>
+												<li><a href="#" onClick="getSection('alumni')">Alumni</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+								<a href="publications.html">Publications</a>
+								<ul>
+									<li><a id="journal-nav" href='publications.html?id=journals#journals'>Journal</a></li>
+									<li><a id="conference-nav" href='publications.html?id=conferences#conferences'>Conference</a></li>
+								</ul>
+								</li>
+								<li><a href="resources.html">Resources</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</nav>
 
 				</div>
 
@@ -66,78 +66,279 @@
 					<div class="container">
 						<article id="main" class="special">
 							<header>
-								<h2><a href="#">Team</a></h2>
+								<h2>Team</h2>
 							</header>
 							<p>
 								[Blurb]
 							</p>
-              <section>
+							<section>
 								<header>
-									<h3>Undergraduate Students</h3>
+									<h3 id="students">Students</h3>
 								</header>
-								<p>
-									Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-									at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-									feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-									fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-									egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-								</p>
-								<p>
-									Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-									orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-									ut penatibus fermentum nibh erat malesuada varius.
-								</p>
 							</section>
               <section>
-								<header>
-									<h3>Graduate Students</h3>
-								</header>
-								<p>
-									Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-									at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-									feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-									fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-									egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-								</p>
-								<p>
-									Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-									orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-									ut penatibus fermentum nibh erat malesuada varius.
-								</p>
+								<button class="accordion"><h3>Undergraduate</h3></button>
+                <div id="undergraduate" class="panel">
+
+									<section class="tiles">
+										<article class="style1">
+											<span class="image">
+												<img src="images/pic01.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Magna</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style2">
+											<span class="image">
+												<img src="images/pic02.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Lorem</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+									</section>
+
+                </div>
 							</section>
-              <section>
-								<header>
-									<h3>Alumni</h3>
-								</header>
-								<p>
-									Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-									at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-									feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-									fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-									egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-								</p>
-								<p>
-									Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-									orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-									ut penatibus fermentum nibh erat malesuada varius.
-								</p>
+							<section>
+								<button class="accordion"><h3>Graduate</h3></button>
+                <div id="graduate" class="panel">
+
+									<section class="tiles">
+										<article class="style1">
+											<span class="image">
+												<img src="images/pic01.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Magna</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style2">
+											<span class="image">
+												<img src="images/pic02.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Lorem</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style3">
+											<span class="image">
+												<img src="images/pic03.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Feugiat</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style4">
+											<span class="image">
+												<img src="images/pic04.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Tempus</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style5">
+											<span class="image">
+												<img src="images/pic05.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Aliquam</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+
+                </div>
 							</section>
-              <section>
+							<section>
+								<button class="accordion"><h3>Alumni</h3></button>
+                <div id="alumni" class="panel">
+
+									<section class="tiles">
+										<article class="style1">
+											<span class="image">
+												<img src="images/pic01.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Magna</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style2">
+											<span class="image">
+												<img src="images/pic02.jpg" alt="" />
+											</span>
+											<a href="team-member.html" target="_blank">
+												<h2>Lorem</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style3">
+											<span class="image">
+												<img src="images/pic03.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Feugiat</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style4">
+											<span class="image">
+												<img src="images/pic04.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Tempus</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style5">
+											<span class="image">
+												<img src="images/pic05.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Aliquam</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style6">
+											<span class="image">
+												<img src="images/pic05.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Aliquam</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style2">
+											<span class="image">
+												<img src="images/pic07.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Ipsum</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style3">
+											<span class="image">
+												<img src="images/pic08.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Dolor</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style1">
+											<span class="image">
+												<img src="images/pic09.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Nullam</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style5">
+											<span class="image">
+												<img src="images/pic10.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Ultricies</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style6">
+											<span class="image">
+												<img src="images/pic11.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Dictum</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+										<article class="style4">
+											<span class="image">
+												<img src="images/pic12.jpg" alt="" />
+											</span>
+											<a href="generic.html">
+												<h2>Pretium</h2>
+												<div class="content">
+													<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+												</div>
+											</a>
+										</article>
+
+                </div>
+							</section>
+							<section>
 								<header>
-									<h3>Faculty</h3>
+									<h3 id="faculty">Faculty</h3>
 								</header>
-								<p>
-									Nascetur volutpat nibh ullamcorper vivamus at purus. Cursus ultrices porttitor sollicitudin imperdiet
-									at pretium tellus in euismod a integer sodales neque. Nibh quis dui quis mattis eget imperdiet venenatis
-									feugiat. Neque primis ligula cum erat aenean tristique luctus risus ipsum praesent iaculis. Fermentum elit
-									fringilla consequat dis arcu. Pellentesque mus tempor vitae pretium sodales porttitor lacus. Phasellus
-									egestas odio nisl duis sociis purus faucibus morbi. Eget massa mus etiam sociis pharetra magna.
-								</p>
-								<p>
-									Eleifend auctor turpis magnis sed porta nisl pretium. Aenean suspendisse nulla eget sed etiam parturient
-									orci cursus nibh. Quisque eu nec neque felis laoreet diam morbi egestas. Dignissim cras rutrum consectetur
-									ut penatibus fermentum nibh erat malesuada varius.
-								</p>
+
+								<section class="tiles">
+									<article id="jason-p-jue" class="style1">
+										<span class="image">
+											<img src="images/pic01.jpg" alt="" />
+										</span>
+										<a href="team-member.html" target="_blank">
+											<h2>Magna</h2>
+											<div class="content">
+												<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											</div>
+										</a>
+									</article>
+									<article class="style2">
+										<span class="image">
+											<img src="images/pic02.jpg" alt="" />
+										</span>
+										<a href="team-member.html" target="_blank">
+											<h2>Lorem</h2>
+											<div class="content">
+												<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											</div>
+										</a>
+									</article>
+
 							</section>
 						</article>
 					</div>
@@ -300,8 +501,8 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/team.js"></script>
 			<!-- Other -->
-			<script src="assets/js/accordion.js"></script>
 
 	</body>
 </html>
