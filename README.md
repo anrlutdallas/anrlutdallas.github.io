@@ -39,6 +39,7 @@ View the website [here][2].
 ## Known Issues:
 * CORS issues with iframes
 * Google calendar will not display if user is not signed in
+* ~~Replace url links in address bar not working~~
 
 <br><br><br><br><hr>
 <sub><sup>

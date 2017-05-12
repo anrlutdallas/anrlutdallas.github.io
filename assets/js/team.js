@@ -41,7 +41,7 @@ return query_string;
 
 window.onload = function onLoad() {
   getSection(QueryString.id);
-  window.history.replaceState('', '', 'file:///Users/caleb/Desktop/html5up-helios/team.html');
+  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/team.html');
 }
 
 function getSection(sectionType) {

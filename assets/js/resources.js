@@ -39,10 +39,10 @@ var QueryString = function () {
 return query_string;
 }();
 
-window.onload = function onLoad() {
-  //getSection(QueryString.id);
-  //window.history.replaceState('', '', 'file:///Users/caleb/Desktop/html5up-helios/publications.html');
-}
+// window.onload = function onLoad() {
+//   getSection(QueryString.id);
+//   window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
+// }
 
 function getSection(sectionType) {
   console.log(sectionType);
