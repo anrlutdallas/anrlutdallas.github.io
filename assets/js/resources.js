@@ -39,10 +39,11 @@ var QueryString = function () {
 return query_string;
 }();
 
-// window.onload = function onLoad() {
-//   getSection(QueryString.id);
-//   window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
-// }
+window.onload = function onLoad() {
+  response.addHeader("Access-Control-Allow-Origin", "*");
+  //getSection(QueryString.id);
+  //window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
+}
 
 function getSection(sectionType) {
   console.log(sectionType);
