@@ -40,22 +40,29 @@ return query_string;
 }();
 
 window.onload = function onLoad() {
-  response.addHeader("Access-Control-Allow-Origin", "*");
-  //getSection(QueryString.id);
-  //window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
+  getSection(QueryString.id);
+  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
 }
 
 function getSection(sectionType) {
   console.log(sectionType);
-  if (sectionType === "journals") {
+  if (sectionType === "documents") {
     //console.log('journals');
-    document.getElementById("journals").style.display = "block";
-    document.getElementById("conferences").style.display = "none";
-    document.getElementById('journals').scrollIntoView();
-  } else if (sectionType === "conferences") {
+    document.getElementById("documents").style.display = "block";
+    document.getElementById("slides").style.display = "none";
+    document.getElementById("whitepapers").style.display = "none";
+    document.getElementById('documents').scrollIntoView();
+  } else if (sectionType === "slides") {
     //console.log('conferences');
-    document.getElementById("conferences").style.display = "block";
-    document.getElementById("journals").style.display = "none";
-    document.getElementById('conferences').scrollIntoView();
+    document.getElementById("slides").style.display = "block";
+    document.getElementById("documents").style.display = "none";
+    document.getElementById("whitepapers").style.display = "none";
+    document.getElementById('slides').scrollIntoView();
+  } else if (sectionType === "whitepapers") {
+    //console.log('conferences');
+    document.getElementById("whitepapers").style.display = "block";
+    document.getElementById("documents").style.display = "none";
+    document.getElementById("slides").style.display = "none";
+    document.getElementById('whitepapers').scrollIntoView();
   }
 }
