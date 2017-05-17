@@ -33,6 +33,7 @@ View the website [here][2].
 * Switch to SCSS
 * Chore: clean up and document code
 	* Fix media queries
+* Ashkan: Have a header.html and footer.html, and include in all files (conssitency)
 
 [3]: https://jsoup.org/
 
