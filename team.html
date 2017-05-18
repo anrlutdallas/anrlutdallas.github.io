@@ -37,33 +37,43 @@
           <header>
             <h3 id="faculty">Faculty</h3>
           </header>
-
-          <section class="tiles">
-            <article id="jason-p-jue" class="style1">
-              <span class="image">
-                <img src="images/people/Jue_Jason.jpg" alt="" />
-              </span>
-              <a href="team-member.html" target="_blank">
-                <h2>Jason P. Jue</h2>
-                <div class="content">
-                  <p>Professor of Computer Science, The University of Texas at Dallas</p>
-                  <p>Research Interests: Optical Network Design, Optical Network Virtualization, Software Defined Optical Networks, Network Survivability, Energy-Efficient Networking, Delay-Tolerant Networks, Wireless and Sensor Networks</p>
-                </div>
-              </a>
-            </article>
+          
+          <!-- start faculty tiles -->
+          <div class="tiles">
             
-            <article class="style2">
-              <span class="image">
-                <img src="images/pic02.jpg" alt="" />
-              </span>
-              <a href="team-member.html" target="_blank">
-                <h2>Jorge Cobb</h2>
-                <div class="content">
-                  <p>Associate Professor of Computer Science, The University of Texas at Dallas</p>
+            <!-- Dr. Jue -->
+            <div id="jason-p-jue" class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+              <a class="member-link" href="#" target="_blank">
+              <div class="item">
+                <div class="image image-container" style="background-image:url(images/people/Jue_Jason.jpg)"></div>
+                <div class="info">
+                  <section class="scrollable">
+                    <p>Professor of Computer Science, The University of Texas at Dallas</p>
+                    <p>Research Interests: Optical Network Design, Optical Network Virtualization, Software Defined Optical Networks, Network Survivability, Energy-Efficient Networking, Delay-Tolerant Networks, Wireless and Sensor Networks</p>
+                  </section>
                 </div>
+                <div class="name">Jason P. Jue</div>
+              </div>
               </a>
-            </article>
-          </section>
+            </div>
+            
+            <!-- Dr. Cobb -->
+            <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+              <a class="member-link" href="#" target="_blank">
+              <div class="item">
+                <div class="image image-container" style="background-image:url(https://placehold.it/230x230)"></div>
+                <div class="info">
+                  <section class="scrollable">
+                    <p>Associate Professor of Computer Science, The University of Texas at Dallas</p>
+                  </section>
+                </div>
+                <div class="name">Jorge Cobb</div>
+              </div>
+              </a>
+            </div>
+
+          <!-- end faculty tiles -->
+          </div>
         <!-- end faculty -->
         </section>
         
@@ -79,43 +89,100 @@
             <!-- start current student panel -->  
             <div id="undergraduate" class="panel">
               
-              <!-- pdf -->
+              <!-- phd -->
               <header>
                 <h3 id="students">Ph.D.</h3>
-              </header>         
+              </header>  
               <!-- start phd tiles -->
-              <section class="tiles">
+              <div class="tiles">
                 
-                <!-- ashkan -->
-                <article class="style1">
-                  <span class="image">
-                    <img src="images/people/ashkan.jpg" alt="" />
-                  </span>
-                  <a href="people/ashkan.html" target="_blank">
-                    <h2>Ashkan Yousefpour</h2>
-                    <div class="content">
-                      <p>Ph.D. student, Department of Computer Science</p>
-                      <p>Research Interest: Fog Computing, Internet of Things, Cloud Computing, Security &amp; Privacy, Graph Theory</p>
+                <!-- Ashkan -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="people/ashkan.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(images/people/ashkan.jpg)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Ph.D. student, Department of Computer Science</p>
+                        <p>Research Interest: Fog Computing, Internet of Things, Cloud Computing, Security &amp; Privacy, Graph Theory</p>
+                      </section>
                     </div>
+                    <div class="name">Ashkan Yousefpour</div>
+                  </div>
                   </a>
-                </article>
+                </div>
                 
-                <!-- genya -->
-                <article class="style2">
-                  <span class="image">
-                    <img src="images/people/genya.jpg" alt="genya" />
-                  </span>
-                  <a href="people/genya.html" target="_blank">
-                    <h2>Genya Ishigaki</h2>
-                    <div class="content">
-                      <p>Ph.D. student, Department of Computer Science</p>
-                      <p>Research Interest: Interdependent networks, Software Defined Networking, Graph optimization</p>
+                <!-- Genya -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="people/genya.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(images/people/genya.jpg)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Ph.D. student, Department of Computer Science</p>
+                        <p>Research Interest: Interdependent networks, Software Defined Networking, Graph optimization</p>
+                      </section>
                     </div>
+                    <div class="name">Genya Ishigaki</div>
+                  </div>
                   </a>
-                </article>
+                </div>
                 
               <!-- end phd tiles -->
-              </section>
+              </div>
+              
+              <!-- masters -->
+              <header>
+                <h3 id="students">Masters</h3>
+              </header>  
+              <!-- start masters tiles -->
+              <div class="tiles">
+                
+                <!-- Name -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="team-member.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(https://placehold.it/230x230)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Masters student, Department of Computer Science</p>
+                        <p>Research Interests</p>
+                      </section>
+                    </div>
+                    <div class="name">Master Student</div>
+                  </div>
+                  </a>
+                </div>
+                
+              <!-- end masters tiles -->
+              </div>
+
+              <!-- undergrad -->
+              <header>
+                <h3 id="students">Undergraduate</h3>
+              </header>  
+              <!-- start undergrad tiles -->
+              <div class="tiles">
+                
+                <!-- Caleb -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="people/caleb.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(images/people/caleb.jpg)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Undergraduate student, Department of Computer Science</p>
+                        <p>Research Interests: Fog Computing, Cloud Computing, Machine Learning</p>
+                      </section>
+                    </div>
+                    <div class="name">Caleb Fung</div>
+                  </div>
+                  </a>
+                </div>
+                
+              <!-- end undergrad tiles -->
+              </div>
+              
             <!-- end current students panel -->
             </div>
           <!-- end current students -->
@@ -130,34 +197,26 @@
           <!-- start visitng scholars panel -->
           <div id="graduate" class="panel">
             <!-- start visiting scholars tiles -->
-            <section class="tiles">
+              <div class="tiles">
                 
-              <article class="style1">
-                <span class="image">
-                  <img src="images/pic01.jpg" alt="" />
-                </span>
-                <a href="team-member.html" target="_blank">
-                  <h2>Magna</h2>
-                  <div class="content">
-                    <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                <!-- Visitng Scholar -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="team-member.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(https://placehold.it/230x230)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Temoc University, Department of Computer Science</p>
+                        <p>Research Interests</p>
+                      </section>
+                    </div>
+                    <div class="name">Visitng Scholar</div>
                   </div>
-                </a>
-              </article>
-										
-              <article class="style2">
-                <span class="image">
-                  <img src="images/pic02.jpg" alt="" />
-                </span>
-                <a href="team-member.html" target="_blank">
-                  <h2>Lorem</h2>
-                  <div class="content">
-                    <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                  </div>
-                </a>
-		      </article>
-			
-            <!-- end visitng scholars tiles -->
-		    </section>
+                  </a>
+                </div>
+                
+              <!-- end visiting scholars tiles -->
+              </div>
           <!-- end visiting scholars panel -->
           </div>
 		<!-- end visiting scholars -->				
@@ -169,34 +228,26 @@
           <!-- start alumni panel -->
           <div id="alumni" class="panel">
             <!-- start alumni tiles -->
-            <section class="tiles">
-              
-              <article class="style1">
-                <span class="image">
-                  <img src="images/pic01.jpg" alt="" />
-                </span>
-                <a href="team-member.html" target="_blank">
-                  <h2>Magna</h2>
-                  <div class="content">
-                    <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+              <div class="tiles">
+                
+                <!-- Alumni -->
+                <div class="tile" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+                  <a class="member-link" href="team-member.html" target="_blank">
+                  <div class="item">
+                    <div class="image image-container" style="background-image:url(https://placehold.it/230x230)"></div>
+                    <div class="info">
+                      <section class="scrollable">
+                        <p>Alumni, Department of Computer Science</p>
+                        <p>Research Interests</p>
+                      </section>
+                    </div>
+                    <div class="name">Alumni</div>
                   </div>
-                </a>
-              </article>
-										
-              <article class="style2">
-                <span class="image">
-                  <img src="images/pic02.jpg" alt="" />
-                </span>
-                <a href="team-member.html" target="_blank">
-                  <h2>Lorem</h2>
-                  <div class="content">
-                    <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                  </div>
-                </a>
-		      </article>
-										
-            <!-- end alumni tiles -->
-            </section>
+                  </a>
+                </div>
+                
+              <!-- end alumni tiles -->
+              </div>
           <!-- end alumni panel -->
           </div>
         <!-- end alumni -->
