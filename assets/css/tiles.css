@@ -12,10 +12,10 @@ body {
 .tile {
   display: inline-flex;
   //background: silver;
-  margin: 7px;
+  margin: 10px;
   width: calc(25% - 14px);
-  height: 230px;
-  min-width: 230px;
+  height: 280px;
+  min-width: 280px;
   justify-content: center;
 }
 
@@ -23,25 +23,26 @@ body {
   transition: 0.3s ease-in-out;
   text-decoration: none;
   font-size: 14px;
-  color: black;
+  color: white;
+  background: transparent;
 }
 
 .item {
-  height: 230px;
-  min-width: 230px;
+  height: 280px;
+  min-width: 280px;
   display: inline-block;
-  //background: salmon;
   position: relative;
 }
 
 .member-link:hover {
   transition: 0.3s ease-in-out;
-  transform: scale(1.1);
+  color: white;
+  background: transparent;
 }
 
 .image-container {
-    width: 230px;
-    height: 230px;
+    width: 280px;
+    height: 280px;
     background-size:cover;
     background-position:50% 50%;
 }
@@ -52,10 +53,8 @@ body {
 
 .member-link:hover .info {
   visibility: visible;
-  color: white;
-  font-size: 13px;
+  transition: 0.3s ease-in-out;
   background-color: rgba(33,33,33,0.6);
-  -webkit-transition: transformation 1s;
 }
 
 .image {
@@ -79,18 +78,17 @@ body {
   padding: 10px;
   text-align: center;
   font-size: 16px;
-  color: white;
   background-color: rgba(33,33,33,0.5);
 }
 
 .scrollable {
-  //background: salmon;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 185px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 240px;
   overflow: scroll;
 }
 
+/*
 .scrollable::-webkit-scrollbar { 
     display: none; 
-}
+}*/
