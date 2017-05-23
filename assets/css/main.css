@@ -3064,6 +3064,11 @@
 				padding-left: 1em;
 				padding-right: 1em;
 			}
+            
+      // TODO: fixme
+            #footer > ul > li {
+                padding: 1em;  
+            }
 
 		/* Carousel */
 
