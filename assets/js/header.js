@@ -6,7 +6,7 @@ document.write('\
   <div class="inner">\
     <header>\
       <h1>Advanced Networks Research Lab</h1>\
-      <h5>At UT Dallas</h5>\
+      <h5>At the University of Texas at Dallas</h5>\
     </header>\
   </div>\
   <!-- end inner -->\
