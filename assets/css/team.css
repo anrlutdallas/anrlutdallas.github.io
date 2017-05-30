@@ -1,0 +1,19 @@
+#undergrad_students {
+  margin-top: 20px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.larger-header {
+  font-size: 28px;
+  color: #df7366;
+}
+
+#faculty {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#faculty > h3 {
+  font-size: 30px;
+}

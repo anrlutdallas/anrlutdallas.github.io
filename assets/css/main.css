@@ -50,11 +50,13 @@
 
 /* Box Model */
 
+/*
 	*, *:before, *:after {
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 	}
+*/
 
 /* Containers */
 
@@ -1727,6 +1729,10 @@
 	footer {
 		margin: 2.5em 0 0 0;
 	}
+
+    .copyright > ul > li {
+      margin-bottom: 10px;
+    }
 
 /* Image */
 
