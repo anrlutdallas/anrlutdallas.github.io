@@ -66,3 +66,7 @@ function getSection(sectionType) {
     document.getElementById('whitepapers').scrollIntoView();
   }
 }
+
+function linky() {
+  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
+}
