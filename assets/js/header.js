@@ -19,18 +19,14 @@ document.write('\
         <a href="/team.html">Team</a>\
         <ul>\
           <li><a href="/team.html#faculty">Faculty</a>\
+          </li>\
+          <li><a href="/team.html#students">Students</a>\
             <ul>\
-              <li><a href="/team.html#jason-p-jue">Dr. Jason P. Jue</a></li>\
+              <li><a href="/team.html?id=students#curent_students">Current Students</a></li>\
+              <li><a href="/team.html?id=students#alumni">Alumni</a></li>\
             </ul>\
           </li>\
           <li><a href="/team.html#visiting-scholars">Visiting Scholars</a></li>\
-          <li><a href="/team.html#students">Students</a>\
-            <ul>\
-              <li><a href="/team.html?id=undergraduate#undergraduate">Undergraduate</a></li>\
-              <li><a href="/team.html?id=graduate#graduate">Graduate</a></li>\
-              <li><a href="/team.html?id=alumni#alumni">Alumni</a></li>\
-            </ul>\
-          </li>\
         </ul>\
       </li>\
       <li><a href="/publications.html">Publications</a>\
