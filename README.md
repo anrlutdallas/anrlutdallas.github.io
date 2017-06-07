@@ -17,7 +17,6 @@ View the website [here][2].
 * Fix known issues
 * Finish publications page with [jsoup][3]
 * Finish team page
-	* Update team members
 	* Update size of profile divs
 	* Update team member page
 * Finish resources page
@@ -33,7 +32,6 @@ View the website [here][2].
 * Switch to SCSS
 * Chore: clean up and document code
 	* Fix media queries
-* Ashkan: Have a header.html and footer.html, and include in all files (conssitency)
 
 [3]: https://jsoup.org/
 
