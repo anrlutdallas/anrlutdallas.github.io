@@ -47,15 +47,10 @@ window.onload = function onLoad() {
 function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "journals") {
-    //console.log('journals');
-    document.getElementById("journals").style.display = "block";
-    document.getElementById("conferences").style.display = "none";
-    document.getElementById('journals').scrollIntoView();
-  } else if (sectionType === "conferences") {
-    //console.log('conferences');
-    document.getElementById("conferences").style.display = "block";
-    document.getElementById("journals").style.display = "none";
-    document.getElementById('conferences').scrollIntoView();
+    document.getElementById("journals-panel").style.display = "block";
+  } 
+  if (sectionType === "conferences") {
+    document.getElementById("conferences-panel").style.display = "block";
   }
 }
 
