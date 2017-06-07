@@ -46,35 +46,16 @@ window.onload = function onLoad() {
 
 function getSection(sectionType) {
   console.log(sectionType);
-  if (sectionType === "undergraduate") {
-    document.getElementById("undergraduate").style.display = "block";
-    document.getElementById('undergraduate').scrollIntoView();
-    document.getElementById("graduate").style.display = "none";
-    document.getElementById("alumni").style.display = "none";
-  } else if (sectionType === "graduate") {
-    document.getElementById("graduate").style.display = "block";
-    document.getElementById('graduate').scrollIntoView();
-    document.getElementById("undergraduate").style.display = "none";
-    document.getElementById("alumni").style.display = "none";
-  } else if (sectionType === "alumni") {
-    document.getElementById("alumni").style.display = "block";
-    document.getElementById('alumni').scrollIntoView();
-    document.getElementById("undergraduate").style.display = "none";
-    document.getElementById("graduate").style.display = "none";
-  } else if (sectionType === "students") {
-    document.getElementById('students').scrollIntoView();
-    document.getElementById("undergraduate").style.display = "none";
-    document.getElementById("graduate").style.display = "none";
-    document.getElementById("alumni").style.display = "none";
-  } else if (sectionType === "faculty") {
-    document.getElementById('faculty').scrollIntoView();
-    document.getElementById("undergraduate").style.display = "none";
-    document.getElementById("graduate").style.display = "none";
-    document.getElementById("alumni").style.display = "none";
-  } else if (sectionType === "jason-p-jue") {
-    document.getElementById('jason-p-jue').scrollIntoView();
-    document.getElementById("undergraduate").style.display = "none";
-    document.getElementById("graduate").style.display = "none";
-    document.getElementById("alumni").style.display = "none";
+  if (sectionType === "current-students") {
+    document.getElementById("curent-students-panel").style.display = "block";
+    //document.getElementById('current-students').scrollIntoView();
+  } 
+  if (sectionType === "alumni") {
+    document.getElementById("alumni-panel").style.display = "block";
+    //document.getElementById('graduate').scrollIntoView();
+  } 
+  if (sectionType === "visiting-scholars") {
+    document.getElementById("visiting-scholars-panel").style.display = "block";
+    //document.getElementById('alumni').scrollIntoView();
   }
 }

@@ -48,25 +48,14 @@ function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "documents") {
     //console.log('journals');
-    document.getElementById("documents").style.display = "block";
-    document.getElementById("slides").style.display = "none";
-    document.getElementById("whitepapers").style.display = "none";
-    document.getElementById('documents').scrollIntoView();
-  } else if (sectionType === "slides") {
+    document.getElementById("documents-panel").style.display = "block";
+  } 
+  if (sectionType === "slides") {
     //console.log('conferences');
-    document.getElementById("slides").style.display = "block";
-    document.getElementById("documents").style.display = "none";
-    document.getElementById("whitepapers").style.display = "none";
-    document.getElementById('slides').scrollIntoView();
-  } else if (sectionType === "whitepapers") {
+    document.getElementById("slides-panel").style.display = "block";
+  } 
+  if (sectionType === "whitepapers") {
     //console.log('conferences');
-    document.getElementById("whitepapers").style.display = "block";
-    document.getElementById("documents").style.display = "none";
-    document.getElementById("slides").style.display = "none";
-    document.getElementById('whitepapers').scrollIntoView();
+    document.getElementById("whitepapers-panel").style.display = "block";
   }
-}
-
-function linky() {
-  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
 }

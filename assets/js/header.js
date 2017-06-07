@@ -18,21 +18,21 @@ document.write('\
       <li>\
         <a href="/team.html">Team</a>\
         <ul>\
-          <li><a href="/team.html#faculty">Faculty</a>\
+          <li><a href="/team.html?id=faculty#faculty">Faculty</a>\
           </li>\
-          <li><a href="/team.html#students">Students</a>\
+          <li><a href="/team.html?id=students#students">Students</a>\
             <ul>\
-              <li><a href="/team.html?id=students#curent_students">Current Students</a></li>\
-              <li><a href="/team.html?id=students#alumni">Alumni</a></li>\
+              <li><a href="/team.html?id=current-students#current-students">Current Students</a></li>\
+              <li><a href="/team.html?id=alumni#alumni">Alumni</a></li>\
             </ul>\
           </li>\
-          <li><a href="/team.html#visiting-scholars">Visiting Scholars</a></li>\
+          <li><a href="/team.html?id=visiting-scholars#visiting-scholars">Visiting Scholars</a></li>\
         </ul>\
       </li>\
       <li><a href="/publications.html">Publications</a>\
         <ul>\
-          <li><a href="/publications.html?id=journal#journal">Journal</a></li>\
-          <li><a href="/publications.html?id=conference#conference">Conference</a></li>\
+          <li><a href="/publications.html?id=journals#journals">Journal</a></li>\
+          <li><a href="/publications.html?id=conferences#conferences">Conference</a></li>\
         </ul>\
       </li>\
       <li><a href="/resources.html">Resources</a>\
