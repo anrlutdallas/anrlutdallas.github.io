@@ -1,0 +1,44 @@
+.announce-news-container > ul > li {
+  margin-bottom: 12px;
+}
+
+#announcements-title, #news-title {
+  color: #ea5848;
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.announce-news > ul > li:before {
+  content: '\ffed';
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+#spacer {
+  display: block;
+  height: 30px;
+}
+
+.date {
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+
+@media screen and (max-width: 1280px) {
+  #announcements-title, #news-title {
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  #announcements-title, #news-title {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  #announcements-title, #news-title {
+    font-size: 24px;
+  }
+}

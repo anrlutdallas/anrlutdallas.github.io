@@ -1,0 +1,31 @@
+.announce-news-container {
+  width: 100%;
+  height: 300px;
+  padding: 12px;
+  overflow: scroll;
+  margin-bottom: 20px;
+}
+
+.announce-news-container > ul > li:before {
+  content: '\ffed';
+  margin-right: 2px;
+}
+
+.announce-news-container > ul > li {
+  margin-bottom: 12px;
+}
+
+#announcements-title, #news-title {
+  color: #ea5848;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#announce-news-more-btn {
+  font-size: 16px;
+}
+
+.date {
+  font-weight: 600;
+  margin-right: 6px;
+}
