@@ -49,13 +49,16 @@ function getSection(sectionType) {
   if (sectionType === "documents") {
     //console.log('journals');
     document.getElementById("documents-panel").style.display = "block";
+    document.getElementById("documents-panel").scrollIntoView();
   } 
   if (sectionType === "slides") {
     //console.log('conferences');
     document.getElementById("slides-panel").style.display = "block";
+    document.getElementById("slides-panel").scrollIntoView();
   } 
   if (sectionType === "whitepapers") {
     //console.log('conferences');
     document.getElementById("whitepapers-panel").style.display = "block";
+    document.getElementById("whitepapers-panel").scrollIntoView();
   }
 }

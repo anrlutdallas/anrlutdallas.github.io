@@ -48,14 +48,14 @@ function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "current-students") {
     document.getElementById("curent-students-panel").style.display = "block";
-    //document.getElementById('current-students').scrollIntoView();
+    document.getElementById("curent-students-panel").scrollIntoView();
   } 
   if (sectionType === "alumni") {
     document.getElementById("alumni-panel").style.display = "block";
-    //document.getElementById('graduate').scrollIntoView();
+    document.getElementById("alumni-panel").scrollIntoView();
   } 
   if (sectionType === "visiting-scholars") {
     document.getElementById("visiting-scholars-panel").style.display = "block";
-    //document.getElementById('alumni').scrollIntoView();
+    document.getElementById("visiting-scholars-panel").scrollIntoView();
   }
 }
