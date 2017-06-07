@@ -41,7 +41,7 @@ return query_string;
 
 window.onload = function onLoad() {
   getSection(QueryString.id);
-  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/team.html');
+  setTimeout(function(){ window.history.replaceState({}, '', 'https://anrlutdallas.github.io/team.html'); }, 600)
 }
 
 function getSection(sectionType) {
