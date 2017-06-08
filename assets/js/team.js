@@ -48,7 +48,7 @@ function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "current-students") {
     document.getElementById("curent-students-panel").style.display = "block";
-    document.getElementById("curent-students").scrollIntoView();
+    document.getElementById("current-students").scrollIntoView();
   } 
   if (sectionType === "alumni") {
     document.getElementById("alumni-panel").style.display = "block";
