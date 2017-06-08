@@ -41,14 +41,14 @@ return query_string;
 
 window.onload = function onLoad() {
   getSection(QueryString.id);
-  setTimeout(function(){ window.history.replaceState({}, '', 'https://anrlutdallas.github.io/team.html'); }, 600)
+  setTimeout(function(){ window.history.replaceState({}, '', 'https://anrlutdallas.github.io/team.html'); }, 400)
 }
 
 function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "current-students") {
     document.getElementById("curent-students-panel").style.display = "block";
-    document.getElementById("curent-students-panel").scrollIntoView();
+    document.getElementById("curent-students").scrollIntoView();
   } 
   if (sectionType === "alumni") {
     document.getElementById("alumni-panel").style.display = "block";
@@ -56,6 +56,6 @@ function getSection(sectionType) {
   } 
   if (sectionType === "visiting-scholars") {
     document.getElementById("visiting-scholars-panel").style.display = "block";
-    document.getElementById("visiting-scholars-panel").scrollIntoView();
+    document.getElementById("visiting-scholars").scrollIntoView();
   }
 }

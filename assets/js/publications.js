@@ -41,18 +41,18 @@ return query_string;
 
 window.onload = function onLoad() {
   getSection(QueryString.id);
-  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/publications.html');
+  setTimeout(function(){ window.history.replaceState({}, '', 'https://anrlutdallas.github.io/publications.html'); }, 400)
 }
 
 function getSection(sectionType) {
   console.log(sectionType);
   if (sectionType === "journals") {
     document.getElementById("journals-panel").style.display = "block";
-    document.getElementById("journals-panel").scrollIntoView();
+    document.getElementById("journals").scrollIntoView();
   } 
   if (sectionType === "conferences") {
     document.getElementById("conferences-panel").style.display = "block";
-    document.getElementById("conferences-panel").scrollIntoView();
+    document.getElementById("conferences").scrollIntoView();
   }
 }
 

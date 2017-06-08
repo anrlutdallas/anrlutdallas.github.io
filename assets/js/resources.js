@@ -41,7 +41,7 @@ return query_string;
 
 window.onload = function onLoad() {
   getSection(QueryString.id);
-  window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html');
+  setTimeout(function(){ window.history.replaceState({}, '', 'https://anrlutdallas.github.io/resources.html'); }, 400)
 }
 
 function getSection(sectionType) {
@@ -49,16 +49,16 @@ function getSection(sectionType) {
   if (sectionType === "documents") {
     //console.log('journals');
     document.getElementById("documents-panel").style.display = "block";
-    document.getElementById("documents-panel").scrollIntoView();
+    document.getElementById("documents").scrollIntoView();
   } 
   if (sectionType === "slides") {
     //console.log('conferences');
     document.getElementById("slides-panel").style.display = "block";
-    document.getElementById("slides-panel").scrollIntoView();
+    document.getElementById("slides").scrollIntoView();
   } 
   if (sectionType === "whitepapers") {
     //console.log('conferences');
     document.getElementById("whitepapers-panel").style.display = "block";
-    document.getElementById("whitepapers-panel").scrollIntoView();
+    document.getElementById("whitepapers").scrollIntoView();
   }
 }
