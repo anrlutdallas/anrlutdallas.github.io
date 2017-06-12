@@ -73,7 +73,8 @@ body {
 .name {
   position: absolute;
   bottom: 0;
-  width: calc(100% - 20px);
+  width: 100%;
+  //width: calc(100% - 20px);
   padding: 10px;
   text-align: center;
   font-size: 16px;
