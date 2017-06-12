@@ -18,6 +18,10 @@
   font-size: 30px;
 }
 
+#gallery {
+  margin-bottom: 7px;
+}
+
 /** https://codepen.io/dudleystorey/pen/kFoGw */
 @import url(https://fonts.googleapis.com/css?family=Istok+Web);
 @keyframes slidy {

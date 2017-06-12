@@ -27,6 +27,7 @@ document.write('\
             </ul>\
           </li>\
           <li><a href="/team.html?id=visiting-scholars#visiting-scholars">Visiting Scholars</a></li>\
+          <li><a href="https://www.flickr.com/photos/151501515@N06/" target="_blank">Gallery</a></li>\
         </ul>\
       </li>\
       <li><a href="/publications.html">Publications</a>\
