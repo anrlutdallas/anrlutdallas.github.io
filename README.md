@@ -6,12 +6,7 @@ View the website [here][2].
 [1]: http://www.utdallas.edu/
 [2]: https://anrlutdallas.github.io/
 
-![Desktop][desktop-img]
-![Mobile][mobile-img]
 <br><br>
-
-[desktop-img]: https://github.com/anrlutdallas/anrlutdallas.github.io/blob/master/images/demo/groundwork-scrncap1.png "Desktop"
-[mobile-img]: https://github.com/anrlutdallas/anrlutdallas.github.io/blob/master/images/demo/groundwork-scrncap2.png "Mobile"
 
 ## TODO:
 * Fix known issues
