@@ -2218,12 +2218,12 @@
       */
     #banner-logo-container {
       position: absolute;
-      left: 10px;
-      top: 10px;
+      left: 30px;
+      top: 30px;
     }
 
     #banner-logo-container img {
-      height: 55px;
+      height: 74px;
       width: 200px;
     }
 
