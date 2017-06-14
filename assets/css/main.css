@@ -2629,6 +2629,18 @@
 				padding-left: 2em;
 				padding-right: 2em;
 			}
+            
+            #banner-logo-container {
+              left: 20px;
+              top: 20px;
+            }
+      
+            #banner-logo-container img {
+              height: 62.9px;
+              width: 170px;
+              top: 20px;
+              left: 20px;
+            }
 
 		/* Footer */
 
@@ -2642,6 +2654,12 @@
 /* Narrow */
 
 /* Narrower */
+    
+    @media screen and (max-width: 1150px) {
+      #header {
+        padding-top: 5em;
+      }
+    }
 
 	@media screen and (max-width: 840px) {
 
@@ -2707,12 +2725,22 @@
 			font-size: 2.5em;
 		}
 		#nav {
-			top: 8.5em;
+			top: 9.5em;
 		}
 	}
 
 	@media screen and (max-width: 736px) {
-
+      
+      #banner-logo-container {
+        top: 15px;
+        left: 15px;
+      }
+      
+      #banner-logo-container img {
+        height: 44.4px;
+        width: 120px;
+      }
+      
 		/* Basic */
 
 			html, body {
