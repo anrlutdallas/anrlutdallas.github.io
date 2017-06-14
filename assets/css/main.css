@@ -2211,6 +2211,21 @@
 	body.homepage.is-loading #header:after {
 		opacity: 1;
 	}
+    
+    /** 
+      banner logo here --
+      delete me on final commit
+      */
+    #banner-logo-container {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    #banner-logo-container img {
+      height: 55px;
+      width: 200px;
+    }
 
 /* Nav */
 	/* TODO */
