@@ -3,7 +3,7 @@ document.write('\
 <div id="header">\
 \
   <!-- start inner -->\
-  <div id="banner-logo-container"><a href="index.html"><img src="/images/header_logo.png"></a></div>\
+  <div id="banner-logo-container"><a href="/index.html"><img src="/images/header_logo.png"></a></div>\
   <div class="inner">\
     <header>\
       <h1>Advanced Networks Research Lab</h1>\
