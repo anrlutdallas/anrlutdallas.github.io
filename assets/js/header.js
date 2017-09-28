@@ -7,7 +7,7 @@ document.write('\
   <div class="inner">\
     <header>\
       <h1>Advanced Networks Research Lab</h1>\
-      <h5>At the University of Texas at Dallas</h5>\
+<img class="image featured" src="/images/utd_web_ecs_top.svg" alt="At the University of Texas at Dallas" style="width:400px; margin: 0 auto; margin-bottom: -20px;" />\
     </header>\
   </div>\
   <!-- end inner -->\

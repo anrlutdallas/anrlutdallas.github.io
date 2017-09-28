@@ -2109,7 +2109,7 @@
 		background-attachment: fixed;
 		color: #fff;
 		text-align: center;
-		padding: 3em 0 7.5em 0;
+		padding: 3em 0 4.5em 0;
 		cursor: default;
 	}
 
@@ -2231,11 +2231,11 @@
 	/* TODO */
 	#nav {
 		position: absolute;
-		top: 12em;
+/*		top: 12em;*/
 		left: 0;
 		width: 100%;
 		text-align: center;
-		padding: 1.5em 0 1.5em 0em;
+/*		padding: 1.5em 0 1.5em 0em;*/
 		z-index: 1;
 		overflow: hidden;
 	}
@@ -2405,7 +2405,7 @@
 	#footer {
 		position: relative;
 		overflow: hidden;
-		padding: 6em 0 6em 0;
+		padding: 0 0 6em 0;
 		background: #F1F2F4;
 		//background: #c2c7cc;
 		color: #52575C;
