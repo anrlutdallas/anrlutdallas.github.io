@@ -1,0 +1,375 @@
+<!doctype>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Traffic Console</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <script src="https://unpkg.com/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <style>
+      body { 
+        margin: 0em;
+        font-family: Sans-Serif;
+      }
+      #main {
+        padding: 2em;
+      }
+      #main > h1 {
+        padding: 0 1em 0 1em;
+      }
+      #map {
+        width: 100%;
+        height: 40em;
+      }
+      .window_label {
+        color: gray;
+      }
+      #window_msg {
+        color: salmon;
+      }
+      #slider {
+        margin-bottom: 10px;
+      }
+      #slider .bar {
+        direction: rtl;
+        height: 10px;
+        width: 230px;
+      }
+      .example-spacer {
+        flex: 1 1 auto;
+      }
+      .input-width {
+        width: 40px;
+      }
+      #user-input {
+        display: flex;
+      }
+      .datepicker {
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+    <h1>Traffic Console</h1>
+      <!-- <button onclick="reload()">Reload</button> -->
+      <div id="user-input">
+        <div id="slider">
+          <input class="bar" type="range" id="rangeinput" value="0" min="0" max="24" onchange="rangeChangeCallback(this.value)" oninput="rangeInputCallback(this.value)"/>
+          <output id="rangevalue">Now</output>
+        </div>
+        <span class="example-spacer"></span>
+        <div id="selection">
+          <span>From:</span>
+          <input id="startDate" class="datepicker" type="text" placeholder="start date" onchange="startChangeCallback(this.value)"/>
+          <span>To:</span>
+          <input id="endDate" class="datepicker" type="text" placeholder="end date" onchange="endChangeCallback(this.value)"/>
+          <button id="submitBtn" onclick="onSubmit()">Get results</button>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+   
+           
+    <script>
+      // https://stackoverflow.com/questions/1544739/google-maps-api-v3-how-to-remove-all-markers
+      // https://stackoverflow.com/questions/25687831/refreshing-google-maps-api-v3-layers
+      let rangeInput = document.getElementById('rangeinput')
+      let startdate = document.getElementById('startDate')
+      let enddate = document.getElementById('endDate')
+      let submitbtn = document.getElementById('submitBtn')
+      submitbtn.disabled = true
+      let socket = io()
+      let gMap = null
+      let markers = []
+      let infoWindows = []
+      let crashIcon = 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
+      let potholeIcon = 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png'
+      let accidents = []
+      let potholes = []
+         
+      
+      let startInput = false;
+      let endInput = false;       
+
+      socket.on('client-connection', function(data){
+	//console.log('asdfasd')
+	//console.log(data)
+        data.records.forEach(function(record) {
+	  if (record.type == 0) {
+	    //console.log('pothole')
+	    let newPothole = {
+        d: '',
+	lat: 0,
+        lng: 0,
+        speed: 0,
+        shock: 0,
+        msg: '',
+        addr: ''
+            }  
+	    newPothole.d = moment(record.date).format('YYYY-MM-DD HH:mm:ss')
+	    newPothole.lat = record.latitude
+	    newPothole.lng = record.longitude
+	    newPothole.speed = record.speed
+	    newPothole.shock = record.shock
+	    newPothole.msg = record.message
+	    newPothole.addr = record.address
+	    potholes.push(newPothole)
+	  }
+	  if (record.type == 1) {
+	let newAccident = {
+        d: '',
+	name: 0,
+        lat: 0,
+        lng: 0,
+        speed: 0,
+        shock: 0,
+        msg: '',
+        addr: '',
+        licns: ''
+      }
+	    //console.log('accident')
+	    newAccident.d = moment(record.date).format('YYYY-MM-DD HH:mm:ss')
+	    newAccident.name = record.name
+            newAccident.lat = record.latitude
+            newAccident.lng = record.longitude
+            newAccident.speed = record.speed
+            newAccident.shock = record.shock
+            newAccident.msg = record.message
+            newAccident.addr = record.address
+	    newAccident.licns = record.licensePlate
+	    accidents.push(newAccident)
+	  }
+	})
+	console.log(accidents.length)
+	console.log(potholes.length)	
+	accidents.forEach(function(accident) {
+          let marker = new google.maps.Marker({
+            position: {lat: accident.lat, lng: accident.lng},
+            map: map,
+            icon: crashIcon,
+            title: 'Crash'
+          })
+          let infowindow = new google.maps.InfoWindow({
+            content: '<div id="marker_window"><p><b> Crash</b><br/><b class="window_label">Date:</b> ' + accident.d + '<br/><b class="window_label">Address:</b> ' + accident.addr + '<br/><b class="window_label">Name:</b> ' + accident.name + '<br/><b class="window_label">Lat:</b> ' + accident.lat + '<br/><b class="window_label">Lng:</b> ' + accident.lng + '<br/><b class="window_label">Speed:</b> ' + accident.speed + '<br/><b class="window_label">Shock:</b> ' + accident.shock + '%<br/><b class="window_label">License:</b> ' + accident.licns + '<br/><span id="window_msg"><b> ' + accident.msg +'</b></span></p></div>'
+          })
+          infoWindows.push(infowindow)
+          marker.addListener('click', function() {
+            infoWindows.forEach(function(infowindow) {
+              infowindow.close()
+            })
+            infowindow.open(map, marker);
+          })
+          markers.push(marker)
+        })
+        
+        potholes.forEach(function(pothole) {
+          //console.log(pothole.lat)
+	  let marker = new google.maps.Marker({
+            position: {lat: pothole.lat, lng: pothole.lng},
+            map: map,
+            icon: potholeIcon,
+            title: 'Pothole'
+          })
+          let infowindow = new google.maps.InfoWindow({
+            content: '<div id="marker_window"><p><b> Pothole</b><br/><b class="window_label">Date:</b> ' + pothole.d + '<br/><b class="window_label">Address:</b> ' + pothole.addr + '<br/><b class="window_label">Lat:</b>' + pothole.lat + '<br/><b class="window_label">Lng:</b> ' + pothole.lng + '<br/><b class="window_label">Speed:</b> ' + pothole.speed + '<br/><b class="window_label">Shock:</b> ' + pothole.shock + '%<br/><span id="window_msg"><b> ' + pothole.msg +'</b></span></p></div>'
+          })
+          infoWindows.push(infowindow)
+          marker.addListener('click', function() {
+            infoWindows.forEach(function(infowindow) {
+              infowindow.close()
+            })
+            infowindow.open(map, marker);
+          })
+          markers.push(marker)
+        })
+      })
+      socket.on('new-pothole', function(data){
+        map.clearMarkers()
+	let marker = new google.maps.Marker({
+               position: {lat: parseFloat(32.983716), lng: parseFloat(-96.752076)},
+               map: map,
+               icon: potholeIcon,
+               title: 'Pothole'
+             })
+             let infowindow = new google.maps.InfoWindow({
+               content: '<div id="marker_window"><p><b> Pothole</b><br/><b class="window_label">Date:</b> ' + moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + '<br/><b class="window_label">Address:</b> ' + '800 W Campbell Rd, Richardson, TX 75080' + '<br/><b class="window_label">Lat:</b> ' + '32.983716' + '<br/><b class="window_label">Lng:</b> ' + '-96.752076' + '<br/><b class="window_label">Speed:</b> ' + '0.00023' + '<br/><b class="window_label">Shock:</b> ' + '31.42252' + '%<br/><br/><span id="window_msg"><b> ' + 'Pothole' +'</b></span></p></div>'
+             })
+             infoWindows.push(infowindow)
+             marker.addListener('click', function() {
+             infoWindows.forEach(function(infowindow) {
+               infowindow.close()
+             })
+               infowindow.open(map, marker);
+             })
+             markers.push(marker)   
+      })
+      socket.on('new-accident', function(data){
+        console.log('accident')
+	map.clearMarkers();
+	let marker = new google.maps.Marker({
+               position: {lat: parseFloat(32.983716), lng: parseFloat(-96.752076)},
+               map: map,
+               icon: crashIcon,
+               title: 'Crash'
+             })
+             let infowindow = new google.maps.InfoWindow({
+               content: '<div id="marker_window"><p><b> Crash</b><br/><b class="window_label">Date:</b> ' + moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + '<br/><b class="window_label">Address:</b> ' + '800 W Campbell Rd, Richardson, TX 75080' + '<br/><b class="window_label">Name:</b> ' + 'Rob Ot' + '<br/><b class="window_label">Lat:</b> ' + '32.983716' + '<br/><b class="window_label">Lng:</b> ' + '-96.752076' + '<br/><b class="window_label">Speed:</b> ' + '45.23423' + '<br/><b class="window_label">Shock:</b> ' + '67.234231' + '%<br/><b class="window_label">License:</b> ' + 'YPK8434' + '<br/><span id="window_msg"><b> ' + 'Crash from passenger side' +'</b></span></p></div>'
+              })
+              infoWindows.push(infowindow)
+              marker.addListener('click', function() {
+              infoWindows.forEach(function(infowindow) {
+                infowindow.close()
+              })
+              infowindow.open(map, marker);
+              })
+              markers.push(marker) 
+
+      })
+      socket.on('hours-result', function(data){
+        rangeInput.disabled = false
+        data.records.forEach(function(record){
+	  if (record.type == 0) {
+	    let marker = new google.maps.Marker({
+              position: {lat: record.latitude, lng: record.longitude},
+              map: map,
+              icon: potholeIcon,
+              title: 'Pothole'
+            })
+            let infowindow = new google.maps.InfoWindow({
+              content: '<div id="marker_window"><p><b> Pothole</b><br/><b class="window_label">Date:</b> ' + moment(record.date).format('YYYY-MM-DD HH:mm:ss') + '<br/><b class="window_label">Address:</b> ' + record.address + '<br/><b class="window_label">Lat:</b> ' + record.latitude + '<br/><b class="window_label">Lng:</b> ' + record.longitude + '<br/><b class="window_label">Speed:</b> ' + record.speed + '<br/><b class="window_label">Shock:</b> ' + record.shock + '%<br/><br/><span id="window_msg"><b> ' + record.message +'</b></span></p></div>'
+            })
+            infoWindows.push(infowindow)
+            marker.addListener('click', function() {
+            infoWindows.forEach(function(infowindow) {
+              infowindow.close()
+            })
+              infowindow.open(map, marker);
+            })
+            markers.push(marker)  
+	  }
+	  if (record.type == 1) {
+	    let marker = new google.maps.Marker({
+              position: {lat: 32.983716, lng: -96.752076},
+              map: map,
+              icon: crashIcon,
+              title: 'Crash'
+            })
+            let infowindow = new google.maps.InfoWindow({
+              content: '<div id="marker_window"><p><b> Crash</b><br/><b class="window_label">Date:</b> ' + moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + '<br/><b class="window_label">Address:</b> ' + '800 W Campbell Rd, Richardson, TX 75080' + '<br/><b class="window_label">Name:</b> ' + 'Rob Ot' + '<br/><b class="window_label">Lat:</b> ' + '32.983716' + '<br/><b class="window_label">Lng:</b> ' + '-96.752076' + '<br/><b class="window_label">Speed:</b> ' + '45.43567' + '<br/><b class="window_label">Shock:</b> ' + '67.43321' + '%<br/><b class="window_label">License:</b> ' + 'YPK8432' + '<br/><span id="window_msg"><b> ' + 'Accident from passenger side' +'</b></span></p></div>'
+             })
+             infoWindows.push(infowindow)
+             marker.addListener('click', function() {
+             infoWindows.forEach(function(infowindow) {
+               infowindow.close()
+             })
+             infowindow.open(map, marker);
+             })
+             markers.push(marker) 
+	  }
+	})
+
+      })
+      socket.on('dateinterval-result', function(data){
+      
+      })
+      socket.on('disconnect', function () {
+        console.log('disconnected')
+        io.disconnect() 
+      })  
+      
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 32.984, lng: -96.752},
+          zoom: 13
+        })
+        gMap = map
+
+        google.maps.Map.prototype.clearMarkers = function() {
+	  if (markers.length == 0) {
+	    return
+	  }
+          for(var i=0; i<markers.length; i++){
+            markers[i].setMap(null)
+          }
+          markers = new Array()
+	  for(var i=0; i<infoWindows.length; i++) {
+	    infoWindows[i].setMap(null)
+	  }
+	  infoWindows = new Array()
+        }
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          infoWindows.forEach(function(infowindow) {
+            infowindow.close()
+          })
+        }) 
+      }
+
+      function rangeInputCallback(val) {
+        if (val == 0) {
+          document.getElementById("rangevalue").innerText = 'Now' 
+        } else {
+          document.getElementById("rangevalue").innerText = val + ' hours ago'
+	}
+      }
+
+      function rangeChangeCallback(val) {
+	socket.emit('hoursPast', val)
+	map.clearMarkers()
+	rangeInput.disabled = true
+      }
+      
+      flatpickr(".datepicker", {});
+      
+      function startChangeCallback(val) {
+        if(val == null || val == "") {
+          startInput  = false;
+        } else {
+          startInput = true;
+          console.log('not empty')
+        }
+        if (startInput && endInput) {
+          console.log('enable')
+          submitbtn.disabled = false;
+        }
+      }
+      
+      function endChangeCallback(val) {
+        if(val == null || val == "") {
+          endInput = false;
+        } else {
+          endInput = true;
+          console.log('not empty')
+        }
+        if (startInput && endInput) {
+          console.log('enable')
+          submitbtn.disabled = false;
+        }
+      }
+      
+      function onSubmit() {
+        var start = moment(startdate.value)
+        var end = moment(enddate.value)
+        var duration = moment.duration(end.diff(start));
+        var hours = duration.asHours();
+        if (hours > 0) {
+          socket.emit('dateInterval', {'startDate': startdate.value, 'endDate': enddate.value})
+        } else {
+          console.log('not valid')
+        }
+      }
+
+      function reload() {
+        // redraw map and reset center and zoom
+        map.setCenter({lat: 32.984, lng: -96.752})
+        map.setZoom(13)
+        google.maps.event.trigger(map, 'resize')
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDicA-5I2AFVgZMw_8pJRUSZ0BkJgR2bfE&callback=initMap"></script>
+  </body>
+</html>
+
