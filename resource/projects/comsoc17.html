@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>ANRL at UT Dallas | ComSoc 17</title>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" type="text/css" href="../../assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="../../assets/css/accordion.css" />
+  <link rel="stylesheet" href="../../assets/css/resources.css" />
+  <link rel="stylesheet" href="../../assets/css/table.css" />
+  <link rel="stylesheet" href="prism.css" />
+  <style>
+    pre {
+      font-size: 75% !important;
+    }
+  </style>
+</head>
+
+<body class="left-sidebar">
+<!-- start page wrapper -->
+<div id="page-wrapper">
+
+  <!-- header -->
+  <script src="../../assets/js/header.js"></script>
+
+  <!-- start main -->
+  <div class="wrapper style1">
+    <!-- start main container -->
+    <div class="container">
+      
+      <h2>Traffic Analysis</h2>
+      <p><i>Below is an outline for our project submission to the <a href="http://www.comsoc.org/communications-technology-changing-world" target="_blank">IEEE Communcations Society Student Competition</a>.</i></p>
+
+      <section>
+        <h3>Overview</h3>
+        <p>
+        Our main goal for this project was to display real time data for the scenario of traffic accidents and potholes. 
+        The primary audience is a municipal or county government. All files are hosted on an AWS EC2 Ubuntu instance.
+        </p>
+      </section>
+
+      <section>
+        <h3>Java Server</h3>
+        <p>
+        The main "brains" of our system is a Java server that obtains a stream of data from the Arduino. 
+        As the server receives incoming data, it writes the data to a MySQL database with <a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html" target="_blank">JDBC</a>.
+        </p>
+        <pre class="language-java line-numbers">
+          <code>
+            try {
+                // Register JDBC driver
+                Class.forName("com.mysql.jdbc.Driver");
+    
+                // Open a connection
+                conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD); // DB_URL, USERNAME, and PASSWORD are constant variables
+                stmt = conn.createStatement();
+    
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Arduino</h3>
+        <p>
+        The Arduino provides a constant stream of GPS and acceleration information to the Java server.
+        We first establish a connection with the Java server with via TCP socket.
+        </p>
+        <pre class="language-arduino line-numbers">
+          <code>
+            // TODO
+          </code>
+        </pre>
+        <p>
+        For the GPS data:
+        </p>
+        <pre class="language-arduino line-numbers">
+          <code>
+            fona.enableGPS(true); // #include "Adafruit_FONA.h"
+          </code>
+        </pre>
+        <p>If GPS data is unavailable, we use the GSM data instead:</p>
+        <pre class="language-arduino line-numbers">
+          <code>
+            fona.getGSMLoc(&latitude, &longitude); // Store latitude and longitude as addresses to their respective pointers
+          </code>
+        </pre>
+        <p>During a pothole we send data to the server as usual, but during a crash, we use an interrupt.</p>
+        <pre class="language-arduino line-numbers">
+          <code>
+            // TODO
+          </code>
+        </pre>
+        </section>
+        
+        <section>
+        <h3>NodeJS Server</h3>
+        <p>
+        TODO
+        </p>
+        <pre class="language-javascript line-numbers">
+          <code>
+            let todo = 1;
+          </code>
+        </pre>
+        </section>
+
+        <section>
+        <h3>Console Webpage</h3>
+        <p>
+        TODO
+        </p>
+        <pre class="language-html line-numbers">
+            <code>
+              Need to fix this with plugin
+            </code>
+        </pre>
+        </section>
+
+        <section>
+        <h3>Analytics Webpage</h3>
+        <p>
+        TODO
+        </p>
+        <pre class="language-html line-numbers">
+          <code>
+                Need to fix this with plugin
+          </code>
+        </pre>
+        </section>
+
+        <section>
+        <h3>Putting it Together</h3>
+        <p>
+        TODO
+        </p>
+        <pre class="language-bash command-line" data-user="anrl" data-host="ubuntu-ec2-instance">
+          <code>
+            echo todo
+          </code>
+        </pre>
+        </section>
+
+        <section>
+        <h3>Concluding Remarks</h3>
+        <p>
+        TODO
+        </p>
+        </section>
+
+    <!-- end main container -->
+    </div>
+  <!-- end main -->
+  </div>
+
+  <!-- footer -->
+  <script src="../../assets/js/footer.js"></script>
+  
+  
+<!-- end page wrapper -->
+</div>
+
+
+<!-- Scripts -->
+<script src="prism.js"></script>
+<script type="text/javascript">
+    // Optional
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+        'remove-trailing': true,
+        'remove-indent': true,
+        'left-trim': true,
+        'right-trim': true,
+    });
+    </script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/jquery.dropotron.min.js"></script>
+<script src="../../assets/js/jquery.scrolly.min.js"></script>
+<script src="../../assets/js/jquery.onvisible.min.js"></script>
+<script src="../../assets/js/skel.min.js"></script>
+<script src="../../assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../assets/js/main.js"></script>
+
+<script src="../../assets/js/resources.js"></script>
+
+
+</body>
+</html>
