@@ -39,98 +39,355 @@
         <h3>Overview</h3>
         <p>
         Our main goal for this project was to display real time data for the scenario of traffic accidents and potholes. 
-        The primary audience is a municipal or county government. All files are hosted on an AWS EC2 Ubuntu instance.
+        The primary audience is a municipal or county government. All files are hosted on an <a href="https://aws.amazon.com/ec2/" target="_blank">AWS EC2</a> Ubuntu instance.
         </p>
       </section>
 
       <section>
-        <h3>Java Server</h3>
+        <h3>Hardware Used</h3>
+        <p>
+        <a href="https://www.arduino.cc/en/Guide/ArduinoUno" target="_blank">Arduino Uno</a> (and other parts with anchor links)
+        <!-- pictures -->
+        </p>
+      </section>
+
+      <section>
+        <h3>Software Used</h3>
+        <h4>Software Tools</h4>
+        <p>
+        AWS EC2, Java IDE (Netbeans and Intellij), NodeJS, and others
+        </p>
+        <h4>Libraries</h4>
+        <p>
+        JDBC, Twilio (and others)
+        </p>
+      </section>
+
+      <section>
+        <h3>Java Server (Server.java)</h3>
         <p>
         The main "brains" of our system is a Java server that obtains a stream of data from the Arduino. 
         As the server receives incoming data, it writes the data to a MySQL database with <a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html" target="_blank">JDBC</a>.
         </p>
         <pre class="language-java line-numbers">
           <code>
+            // Open a TCP port for the Arduino to establish a connection
+            // ...
+            // Connection with the MySQL database
             try {
-                // Register JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
-    
-                // Open a connection
-                conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD); // DB_URL, USERNAME, and PASSWORD are constant variables
-                stmt = conn.createStatement();
-    
+              // Register JDBC driver
+              Class.forName("com.mysql.jdbc.Driver");
+              // Open a connection
+              conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD); // DB_URL, USERNAME, and PASSWORD are constant variables
+              stmt = conn.createStatement();
             } catch (SQLException se) {
                 se.printStackTrace();
+            }
+          </code>
+        </pre>
+        <p>
+        The Java server also sends text messages and phone calls using the <a href="https://www.twilio.com/docs/api/rest" target="_blank">Twilio API</a> with <a href="https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse" target="_blank">reverse geocode</a> latitude, longitude coordinates for a human-friendly address. 
+        This feature can is intended for use in notifying a driver's emergency contact and authorities during an accident.
+        When the Java server receives a pothole or accident packet from the Arduino, it also sends that data to the NodeJS server.
+        </p>
+        <pre class="language-java line-numbers" data-line="2,22-24,45">
+          <code>
+            // Create a TCP socket on a port
+            ServerSocket listener = new ServerSocket(PORT);
+            try {
+              while (true) {
+                new Handler(listener.accept()).start();
+              }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                listener.close();
+            }
+            // The Handler class
+            private static class Handler extends Thread {
+              // Create a new socket
+              public Handler(Socket socket) {
+                this.socket = socket;
+              }
+              // ...
+              while (true) {
+                String input = in.readLine(); // Read packet from Arduino
+                // ...
+                int eventID = writeEventToDB(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], message); // 
+                sendEventIDtoNodeJSserver(eventID);
+                callnTextEmergencyContacts(parts[5], parts[0], parts[1]);
+              }
+              // ...
+            }
+            // Write the data to the database
+            private int writeEventToDB(String latitude, String longitude, String speed, String shock, String type, String driverId, String message) throws SQLException {
+                Date date = new Date();
+                String currentTime = sdf.format(date);
+                // Create the database query
+                String query = "INSERT INTO events (date, latitude, longitude, speed, shock, type, driverId, message)"
+                        + " VALUES ('" + currentTime + "', '" + latitude + "', '" + longitude + "', '" + speed + "', '" + shock + "', '" + type + "', '" + driverId + ", '" + message + "');";
+                stmt.executeUpdate(query);
+                // get the last inserted ID
+                query = "SELECT LAST_INSERT_ID() as id;";
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                return rs.getInt("id");
+            }
+            // Send the data to the NodeJS server
+            private static void sendEventIDtoNodeJSserver(int eventID) throws UnknownHostException {
+              try {
+                Socket socket = new Socket(WEBSERVER_ADDR, WEBSERVER_PORT);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                out.println(eventID);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            }
+            // Call and text the emergency contact during a crash
+            private static void callnTextEmergencyContacts(String DriverID, String latitude, String longitude) throws SQLException, IOException {
+              String sql = "SELECT * from drivers where id='" + DriverID + "'";
+              ResultSet rs = stmt.executeQuery(sql);
+              while (rs.next()) {
+                //Retrieve by column name
+                String name = rs.getString("name");
+                String EmergencyName = rs.getString("emergencyName");
+                String EmergencyContact = rs.getString("emergencyContact");
+                String plate = rs.getString("licensePlate");
+                String emergencyMessage = "Hello, We are sorry to deliver this urgent message." + name + ", driver of the car with licence plate number " + plate + " was involved in an accident now, at" + ReverseGeocode.getStreetAddress(latitude, longitude);
+                Calling.textPhone(DestinationPhone, emergencyMessage, AuthorizedCallerPhone); // Text the emergency contact
+                Calling.createXML(emergencyMessage, "/home/ubuntu/nginx/public/static/call/v1.xml");
+                Calling.callPhone(DestinationPhone, "http://web-host-xml-file", AuthorizedCallerPhone);
+              }
+              rs.close();
             }
           </code>
         </pre>
       </section>
 
       <section>
-        <h3>Arduino</h3>
+        <h3>Arduino (Arduino_Uno.ino)</h3>
         <p>
-        The Arduino provides a constant stream of GPS and acceleration information to the Java server.
+        The Arduino provides a constant stream of GPS and acceleration information to the Java server. 
+        The majority of connections that the Arduino makes is done through the <a href="https://github.com/adafruit/Adafruit_FONA" target="_blank">Adafruit FONA library</a>.
         We first establish a connection with the Java server with via TCP socket.
         </p>
         <pre class="language-arduino line-numbers">
           <code>
-            // TODO
+            #include "Adafruit_FONA.h"
+            // ...
+            fonaSerial->begin(PORT);
           </code>
         </pre>
         <p>
-        For the GPS data:
+        If a connection to the Java server is successfully established, we can start polling for GPS and accelerometer data. 
+        We send 
         </p>
         <pre class="language-arduino line-numbers">
           <code>
-            fona.enableGPS(true); // #include "Adafruit_FONA.h"
-          </code>
-        </pre>
-        <p>If GPS data is unavailable, we use the GSM data instead:</p>
-        <pre class="language-arduino line-numbers">
-          <code>
-            fona.getGSMLoc(&latitude, &longitude); // Store latitude and longitude as addresses to their respective pointers
-          </code>
-        </pre>
-        <p>During a pothole we send data to the server as usual, but during a crash, we use an interrupt.</p>
-        <pre class="language-arduino line-numbers">
-          <code>
-            // TODO
+            // ...
+            fona.enableGPS(true); // Enable GPS
+            // ... 
+            fona.getGSMLoc(&latitude, &longitude); // If GPS is unavailable, we can use GSM location instead
+            // ...
+            void detectCrash(){
+              if (crashDetected){
+                memcpy(dataToSend,data,lastIndex(data) + 1);
+                fona.TCPsend(dataToSend,lastIndex(data) + 1);
+                Serial.println(dataToSend); // 128-bit message
+              }
+              crashDetected = false;
+            }
           </code>
         </pre>
         </section>
         
         <section>
-        <h3>NodeJS Server</h3>
+        <h3>NodeJS Server (server.js)</h3>
         <p>
-        TODO
+        The NodeJS server is responsible for handling real-time display of crash data.
+        It obtains data from the Java server and uses a <a href="https://socket.io/docs/" target="_blank">socket.io</a> connection to displays the traffic data. 
+        When a web client connects, the NodeJS server sends recent traffic data within the past hour given the driver ID from the Java server. 
+        In order to obtain this previous data, the this server also needs to connect to the MySQL database.
+        </p>
+        <pre class="language-javascript line-numbers" data-line="7,11,13,20">
+          <code>
+            let con = mysql.createConnection({ // Define the connection parameters
+              host: "localhost",
+              user: "anrl",
+              password: PASSWORD,
+              database: "traffic"
+            })
+            con.connect(function(err) { // Connect to the MySQL database
+              if (err) throw err 
+            })
+            // ...
+            io.on('connection', function(socket){ // On new web client connection and send the most recent traffic data to the client
+              // Query the database
+              con.query("SELECT date, latitude, longitude, speed, shock, type, message, address, name, licensePlate FROM events, drivers WHERE events.driverId = drivers.id", function (err, result, fields) {
+                if (err) throw err
+                let records = []
+                records = result
+                socket.emit('client-connection', {'records': records})
+            })
+            // ...
+            const io = require('socket.io')(web_server)
+          </code>
+        </pre>
+        <p>
+        The NodeJS server uses <a href="https://expressjs.com" target="_blank">ExpressJS</a> to route server static webpages - the console webpage and the analytics webpage.
         </p>
         <pre class="language-javascript line-numbers">
           <code>
-            let todo = 1;
+            // Route to the console webpage
+            web_app.get('/console', function(req, res, next){
+              res.sendFile(path.resolve('/path/to/console.html'))
+            })
+            // Route to the analytics webpage
+            web_app.get('/analytics', function(req, res, next){
+              res.sendFile(path.resolve('/path/to/analytics.html'))
+            })
+            // ...
+            const web_server = https.createServer(options, web_app);    
+            web_server.listen(443); // Server with SSL enabled (via Let's Encrypt)
+          </code>
+        </pre>
+        </p>
+        <p>
+        I used the <a href="https://yarnpkg.com/en/" target="_blank">Yarn</a> package manager, but you can still use <a href="https://www.npmjs.com" target="_blank">NPM</a>. Below is my manifest.json configuration:
+        </p>
+        <pre class="language-json line-numbers" data-line="14">
+          <code>
+            {
+              "name": "node-server",
+              "version": "0.1.0",
+              "private": true,
+              "dependencies": {
+                "cors": "^2.8.4",
+                "express": "^4.15.4",
+                "express-http-proxy": "^1.0.6",
+                "mysql": "^2.14.1",
+                "request": "^2.81.0",
+                "socket.io": "^2.0.3"
+              },
+              "scripts": {
+                "start": "sudo node server.js"
+              }
+            }       
           </code>
         </pre>
         </section>
 
         <section>
-        <h3>Console Webpage</h3>
+        <h3>Console Webpage (console.html)</h3>
         <p>
-        TODO
+        The main portion of the console webpage is a Google map that displays markers in the order of real time data from the NodeJS server. 
+        This is real time interaction is facilitated by a TCP-based connection via socket.io.
+        The user can also toggle when he wants to view traffic data for the past 24 hours in hourly increments, or select a date range. 
         </p>
-        <pre class="language-html line-numbers">
-            <code>
-              Need to fix this with plugin
-            </code>
+        <pre class="language-html line-numbers" data-line="17,40">
+          <code>
+            &lt;div id="main"&gt;
+              &lt;h1&gl;Traffic Console&lt;/h1&gt;
+                &lt;div id="user-input"&gt;
+                  &lt;div id="slider"&gt;
+                    &lt;input class="bar" type="range" id="rangeinput" value="0" min="0" max="24" onchange="rangeChangeCallback(this.value)" oninput="rangeInputCallback(this.value)"/&gt;
+                      &lt;output id="rangevalue">Now&lt;/output&gt;
+                  &lt;/div&gt;
+                &lt;span class="example-spacer"&gl;&lt;/span&gt;
+                &lt;div id="selection"&gt;
+                  &lt;span&gl;From:&lt;/span&gt;
+                  &lt;input id="startDate" class="datepicker" type="text" placeholder="start date" onchange="startChangeCallback(this.value)"/&gt;
+                  &lt;span>To:&lt;/span&gt;
+                  &lt;input id="endDate" class="datepicker" type="text" placeholder="end date" onchange="endChangeCallback(this.value)"/&gt;
+                  &lt;button id="submitBtn" onclick="onSubmit()"&gl;Get results&lt;/button&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;div id="map"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;script&gt;
+            // ...
+            socket.on('client-connection', function(data){ // When client is connected with web server
+              &lt;!-- ... --&gt;
+              let marker = new google.maps.Marker({ // Create marker
+                position: {lat: accident.lat, lng: accident.lng},
+                map: map,
+                icon: crashIcon,
+                title: 'Crash'
+              })
+            })
+            // ...
+            function initMap() { // Callback function when Google map is loaded
+              map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 32.984, lng: -96.752},
+                zoom: 13
+              })
+              // ...
+            }
+            &lt;script/&gt;
+            &lt;!-- ... --&gt;
+            &lt;script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"&gt;&lt;/script&gt;
+          </code>
         </pre>
         </section>
 
         <section>
-        <h3>Analytics Webpage</h3>
+        <h3>Analytics Webpage (analytics.html)</h3>
         <p>
-        TODO
+        This webpage displays the accident speed in sections of a donut chart. 
+        It also displays a comprehensive line chart comparing the potholes to accidents given a date range.
         </p>
         <pre class="language-html line-numbers">
           <code>
-                Need to fix this with plugin
+              &lt;div id="main"&gt;
+              &lt;h1>Analytics&lt;h1/&gt;
+                &lt;div id="user-input"&gt;
+                &lt;span>From:&lt;span/&gt;
+                &lt;input id="startDate" class="datepicker" type="text" placeholder="start date" onchange="startChangeCallback(this.value)"/&gt;
+                &lt;span>To:&lt;/span>
+                &lt;input id="endDate" class="datepicker" type="text" placeholder="end date" onchange="endChangeCallback(this.value)"/&gt;
+                &lt;button id="submitBtn" onclick="analyze()">Analyze&lt;button/&gt;
+                &lt;div/&gt;
+                &lt;div id="donut-container">
+                &lt;h2>Accident Speeds&lt;h2/&gt;
+                &lt;canvas id="donutChart">&lt;canvas/&gt;
+                &lt;div/&gt;
+                &lt;div id="line-container">
+                &lt;h2>Accident-Pothole Comparison&lt;h2/&gt;
+                &lt;canvas id="lineChart">&lt;canvas/&gt;
+                &lt;div/&gt;
+              &lt;div/&gt;
+            &lt;script&gt;
+              flatpickr(".datepicker", {}); // Instantiate datepicker object
+              // ...
+              // Donut chart
+              // ...
+              myLineChart = new Chart(lineCtx, { // Line chart
+                type: 'line',
+                data: {
+                labels: labels,
+                datasets: [
+                {
+                  label: "Crashes",
+                  fill: false,
+                  lineTension: 0.2,
+                  borderColor: 'rgb(255, 99, 132)',
+                  data: crashData
+                },
+                 {
+                   label: "Potholes",
+                   fill: false,
+                   lineTension: 0.2,
+                   borderColor: 'rgb(66, 134, 244)',
+                   data: potholeData
+                 }
+               ]
+             },
+             options: {
+               responsive: true,
+               maintainAspectRatio: true
+             }
+             })
+            &lt;script/&gt;
           </code>
         </pre>
         </section>
@@ -138,11 +395,13 @@
         <section>
         <h3>Putting it Together</h3>
         <p>
-        TODO
+        Run the Java server, run the NodeJS server, then start up the Arduino. Open the console webpage and jolt the Arduino to see the system in action! 
+        Make sure you MySQL database is running and either Apache, Nginx, or and file server is running to serve your XML files if you are using Twilio for phone calls.
         </p>
         <pre class="language-bash command-line" data-user="anrl" data-host="ubuntu-ec2-instance">
           <code>
-            echo todo
+            java -cp ~/path/to/libraries/\*: Server   # In the Java server directory
+            yarn start   # In the NodeJS server directory
           </code>
         </pre>
         </section>
@@ -150,7 +409,9 @@
         <section>
         <h3>Concluding Remarks</h3>
         <p>
-        TODO
+        This project has been a rewarding experience for all team members.
+        In the future, we consider inplementing connections between the Arduino and Java server as well as the Java server and NodeJS server with UDP. 
+        We may also update the project with additional features, such the ability for a client to track his driving habits (average speeds, turning habits, acceration habitis, etc). 
         </p>
         </section>
 
