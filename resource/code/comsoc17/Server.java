@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 public class Server {
 
     // for now we are not calling the 
-    private static String DestinationPhone = "+19723022013"; // this is the phone number that is called
-    private static String AuthorizedCallerPhone = "+14693221354"; // this is our registered phone number
+    private static String DestinationPhone = "+1234567890"; // this is the phone number that is called
+    private static String AuthorizedCallerPhone = "+1234567890"; // this is our registered phone number
 
     private static final int PORT = 43005;
     private static final int WEBSERVER_PORT = 43006; // port number of NodeJS server
