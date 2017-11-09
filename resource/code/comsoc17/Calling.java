@@ -18,8 +18,8 @@ import org.w3c.dom.Element;
 
 public class Calling {
 
-    public static final String ACCOUNT_SID = "ACa4235d51a38dcd8ed4975cb9a960849d";
-    public static final String AUTH_TOKEN = "3753be4d0f8912303f584a5beb8e18d0";
+    public static final String ACCOUNT_SID = "SID";
+    public static final String AUTH_TOKEN = "TOKEN";
 
     /**
      * Texts the DestinationPhone from the registered phone number with Twilio
