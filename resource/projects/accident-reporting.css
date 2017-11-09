@@ -1,0 +1,62 @@
+#authors {
+  margin-top: 1em;
+  color: #df7366;
+}
+
+.summary {
+  max-width: 800px;
+}
+
+.embed-container { 
+  position: relative;
+  margin-top: 5em;
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-bottom: 1em; 
+  padding-bottom: 56.25%; 
+  height: 0; 
+  overflow: hidden; 
+  max-width: 100%; 
+} 
+.embed-container iframe, .embed-container object, .embed-container embed { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+}
+
+.table {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.column {
+  width: calc(33% - 2em);
+  margin: 1em;
+  text-align: center;
+}
+
+.col-description {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.link-button {
+  font-size: 12pt;
+}
+
+i {
+  margin-right: 0.2em;
+}
+
+@media screen and (max-width: 902px) {
+  .column {
+    width: calc(100% - 2em);
+  }
+  .link-button {
+    width: 100%;
+  }
+}
