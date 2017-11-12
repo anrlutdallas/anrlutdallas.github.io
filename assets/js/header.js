@@ -39,10 +39,9 @@ document.write('\
       </li>\
       <li><a href="/resources.html">Resources</a>\
         <ul>\
-          <li><a href="/resources.html?id=documents#documents">Document</a></li>\
+          <li><a href="/resources.html?id=documents#documents">Documents</a></li>\
           <li><a href="/resources.html?id=slides#slides">Slides</a></li>\
-          <li><a href="/resources.html?id=whitepapers#whitepapers">White Paper</a></li>\
-          <li><a href="/publications.html">Publications</a></li>\
+          <li><a href="/resources.html?id=whitepapers#whitepapers">White Papers</a></li>\
         </ul>\
       </li>\
       <li><a href="/contact.html">Contact</a></li>\
