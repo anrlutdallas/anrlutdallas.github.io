@@ -7,7 +7,7 @@
   buttons: technical report (pdf with icon), code (github icon), technical details
   details for buttons
   -->
-  <title>ANRL at UT Dallas | ComSoc 17</title>
+  <title>ANRL at UT Dallas | Project Details: Instant Accident Reporting and Crowdsourced Road Condition Analytics for Smart Cities</title>
   
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,21 +38,20 @@
     <!-- start main container -->
     <div class="container">
       
-      <h2>Traffic Analysis</h2>
-      <p><i>Below is an outline for our project submission to the <a href="http://www.comsoc.org/communications-technology-changing-world" target="_blank">IEEE Communcations Society Student Competition</a>.</i></p>
+      <h2>Project Details: Instant Accident Reporting and Crowdsourced Road Condition Analytics for Smart Cities</h2>
+      <p><i>Below is more details and guidance for our project submission to the <a href="http://www.comsoc.org/communications-technology-changing-world" target="_blank">2017 IEEE ComSoc Student Competition “Communications Technology Changing the World”</a>.</i></p>
 
       <section>
         <h3>Overview</h3>
         <p>
-        Our main goal for this project was to display real time data for the scenario of traffic accidents and potholes. 
-        The primary audience is a municipal or county government. All files are hosted on an <a href="https://aws.amazon.com/ec2/" target="_blank">AWS EC2</a> Ubuntu instance.
+        This page contains information and implementation details about the project, The project consists of a device that sits inside of a vehicle and constantly monitors car's information. It can determine speed, g-force, and location. Using these data, the device can detect a car crash (or pothole on the road). The data collected from the car is forwarded to a server for more in-depth analytics. If there is an accident, the server promptly contacts the emergency services and contacts with the location of the crash. The pothole information is used for analytics of road conditions for smart city operators.
         </p>
       </section>
 
       <section>
         <h3>Hardware Used</h3>
         <p>
-        <a href="https://www.arduino.cc/en/Guide/ArduinoUno" target="_blank">Arduino Uno</a> (and other parts with anchor links)
+        Arduino Uno, SIM808 Module, SIM card, GPS Antenna, GSM Antenna, Arduino 101 (Intel Curie), LEDs, 220 Ohm resistors.
         <!-- pictures -->
         </p>
       </section>
@@ -61,19 +60,31 @@
         <h3>Software Used</h3>
         <h4>Software Tools</h4>
         <p>
-        AWS EC2, Java IDE (Netbeans and Intellij), NodeJS, and others
+        Amazon AWS cloud IaaS EC2, Java IDE (Netbeans and Intellij), NodeJS, Javascript, MySQL, HTML, CSS
         </p>
         <h4>Libraries</h4>
         <p>
-        JDBC, Twilio (and others)
+        JDBC, <a href="https://www.twilio.com/docs/api/rest" target="_blank">Twilio</a>, <a href="https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse" target="_blank">Google reverse geocode</a>
         </p>
       </section>
 
+        <section>
+            <h3>Main Modules</h3>
+                Our accident reporting system can be divided into two modules/sub-systems. The first part is the Accident Detection Module (ADM) which is
+constantly monitoring acceleration and determines the moment a crash or
+pothole happens. It also continuously polls for GPS location and velocity.
+The second part is the Accident Reporting and Analysis Module (ARAM),
+which is a program and a web interface that has the online accidents reporting
+portal, analytics charts and the databases associated with the system. ARAM
+reports the accidents to Emergency organizations and calls the emergency
+contacts of the person(s) involved in accidents.
+        </section>
+        
       <section>
         <h3>Java Server (Server.java)</h3>
         <p>
-        The main "brains" of our system is a Java server that obtains a stream of data from the Arduino. 
-        As the server receives incoming data, it writes the data to a MySQL database with <a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html" target="_blank">JDBC</a>.
+        The main "brains" of the ARAM is a Java server that obtains a stream of data from the ADM. 
+        As the server receives incoming data, it writes the data to a MySQL database with JDBC.
         </p>
         <pre class="language-java line-numbers">
           <code>
@@ -91,83 +102,235 @@
             }
           </code>
         </pre>
-        <p>
-        The Java server also sends text messages and phone calls using the <a href="https://www.twilio.com/docs/api/rest" target="_blank">Twilio API</a> with <a href="https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse" target="_blank">reverse geocode</a> latitude, longitude coordinates for a human-friendly address. 
-        This feature can is intended for use in notifying a driver's emergency contact and authorities during an accident.
-        When the Java server receives a pothole or accident packet from the Arduino, it also sends that data to the NodeJS server.
-        </p>
-        <pre class="language-java line-numbers" data-line="2,22-24,45">
+        
+          <p>Here is the main parts of the Server.java file. There are two port numbers, one for the java server, and one for the NodeJS server that shows the accident information on the web portal. In the code, we first connect to the JDBC server (for writing accident and pothole information to the database). Then the java server and NodeJS server are initialized. </p>
+        <pre class="language-java line-numbers">
           <code>
-            // Create a TCP socket on a port
-            ServerSocket listener = new ServerSocket(PORT);
-            try {
-              while (true) {
-                new Handler(listener.accept()).start();
-              }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            } finally {
-                listener.close();
+private static final int PORT = 43005;
+private static final int WEBSERVER_PORT = 43006; // port number of NodeJS server
+public static void main(String[] args) throws Exception {
+try {
+    //STEP 2: Register JDBC driver
+    Class.forName("com.mysql.jdbc.Driver");
+    
+    //STEP 3: Open a connection
+    conn = DriverManager.getConnection(DB_URL, USER, PASS);
+    stmt = conn.createStatement();
+} catch (SQLException se) {
+    ...
+}
+ServerSocket ServerSocketlistener = new ServerSocket(PORT);
+ServerSocket NodeJSSocketListener = new ServerSocket(WEBSERVER_PORT);
+try {
+    NodeJSHandler NJSH = new NodeJSHandler(NodeJSSocketListener.accept());
+    NJSH.start();
+    new Handler(ServerSocketlistener, NJSH.getNodeJSSocket()).start();
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+} 
+...
+</code>
+</pre>
+
+          <p>This is how the NodeJS server and java server look like. When the Java server receives a pothole or accident data from the ADM, it first generate an appropriate meta data for the event (e.g. "accident from passenger side"), then it obtains a humar readable address of the location, then writes it to the database, and finally it sends the data to the NodeJS server, so that the pothole or accident is shown on the website.</p>
+          <p>The two functions callnTextEmergencyContacts() and generateMessage() are shown below as well.</p>
+<pre class="language-java line-numbers">
+          <code>
+private static class NodeJSHandler extends Thread {
+    public void run() {
+        try {
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+...
+private static class Handler extends Thread {
+  // ...
+  public void run() {
+    while (true) {
+    
+   try {
+    ...
+        while ((input = in.readLine()) != null) {
+            ...
+            if (input.length() > 10) {
+                String[] parts = input.split(" ");
+                // parts[0] = [latitude],  parts[1] = [longitude]  parts[2] = [speed],  parts[3] = [shock]  parts[4] = [gforce], parts[5] = [axis], parts[6] = [type], parts[7] = [driverId]
+                if (parts[6].equalsIgnoreCase("1")) { // if type is 1 (Accident
+                    message = generateMessage(Integer.parseInt(parts[4]), parts[5]);
+                } else {
+                    message = "Pothole";
+                }
+                ...
+                String humanReadableAddress = ReverseGeocode.getStreetAddress(parts[0], parts[1]);
+                int eventID = writeEventToDB(parts[0], parts[1], parts[2], parts[3], parts[6], parts[7], message, humanReadableAddress);
+                try {
+                    sendEventIDtoNodeJSserver(nodeJSSocket, eventID, parts[0], parts[1], parts[2], parts[3], message, humanReadableAddress, parts[7]);
+                } catch (UnknownHostException e) {
+                    System.out.println("Node server is down!");
+                }
+                if (parts[6].equalsIgnoreCase("1")) { // if type is 1 (Accident
+                    callnTextEmergencyContacts(parts[7], parts[0], parts[1], humanReadableAddress);
+                }
             }
-            // The Handler class
-            private static class Handler extends Thread {
-              // Create a new socket
-              public Handler(Socket socket) {
-                this.socket = socket;
-              }
-              // ...
-              while (true) {
-                String input = in.readLine(); // Read packet from Arduino
-                // ...
-                int eventID = writeEventToDB(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], message); // 
-                sendEventIDtoNodeJSserver(eventID);
-                callnTextEmergencyContacts(parts[5], parts[0], parts[1]);
-              }
-              // ...
+        }
+    ...
+    }
+    // ...
+    private static void callnTextEmergencyContacts(String DriverID, String latitude, String longitude, String humanReadableAddress) throws SQLException, IOException{
+        String sql = "SELECT * from drivers where id='" + DriverID + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            //Retrieve by column name
+            String name = rs.getString("name");
+            String EmergencyName = rs.getString("emergencyName");
+            String EmergencyContact = rs.getString("emergencyContact");
+            String plate = rs.getString("licensePlate");
+
+            String emergencyMessage = "Hello, We are sorry to deliver this urgent message. " + name + ", driver of the car with licence plate number " + plate + " was involved in an accident now, at" + humanReadableAddress;
+            Calling.textPhone(DestinationPhone, emergencyMessage, AuthorizedCallerPhone); // text the emergency contact
+            Calling.createXML(emergencyMessage, "/var/www/html/call/v1.xml");
+            Calling.callPhone(DestinationPhone, "http://ec2-54-202-247-75.us-west-2.compute.amazonaws.com/call/v1.xml", AuthorizedCallerPhone);
+
+        }
+        rs.close();
+    }
+
+    private static String generateMessage(int gforce, String biggestShockAxis) {
+        String message = "Accident from the ";
+        if (gforce < 0) {
+            if (biggestShockAxis.equalsIgnoreCase("x")) {
+                message += "front";
+            } else if (biggestShockAxis.equalsIgnoreCase("y")) {
+                message += "driver side";
+            } else {
+                message += "top";
             }
-            // Write the data to the database
-            private int writeEventToDB(String latitude, String longitude, String speed, String shock, String type, String driverId, String message) throws SQLException {
-                Date date = new Date();
-                String currentTime = sdf.format(date);
-                // Create the database query
-                String query = "INSERT INTO events (date, latitude, longitude, speed, shock, type, driverId, message)"
-                        + " VALUES ('" + currentTime + "', '" + latitude + "', '" + longitude + "', '" + speed + "', '" + shock + "', '" + type + "', '" + driverId + ", '" + message + "');";
-                stmt.executeUpdate(query);
-                // get the last inserted ID
-                query = "SELECT LAST_INSERT_ID() as id;";
-                ResultSet rs = stmt.executeQuery(query);
-                rs.next();
-                return rs.getInt("id");
+        } else {
+            if (biggestShockAxis.equalsIgnoreCase("x")) {
+                message += "back";
+            } else if (biggestShockAxis.equalsIgnoreCase("y")) {
+                message += "passenger side";
+            } else {
+                message += "bottom";
             }
-            // Send the data to the NodeJS server
-            private static void sendEventIDtoNodeJSserver(int eventID) throws UnknownHostException {
-              try {
-                Socket socket = new Socket(WEBSERVER_ADDR, WEBSERVER_PORT);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                out.println(eventID);
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            }
-            // Call and text the emergency contact during a crash
-            private static void callnTextEmergencyContacts(String DriverID, String latitude, String longitude) throws SQLException, IOException {
-              String sql = "SELECT * from drivers where id='" + DriverID + "'";
-              ResultSet rs = stmt.executeQuery(sql);
-              while (rs.next()) {
-                //Retrieve by column name
-                String name = rs.getString("name");
-                String EmergencyName = rs.getString("emergencyName");
-                String EmergencyContact = rs.getString("emergencyContact");
-                String plate = rs.getString("licensePlate");
-                String emergencyMessage = "Hello, We are sorry to deliver this urgent message." + name + ", driver of the car with licence plate number " + plate + " was involved in an accident now, at" + ReverseGeocode.getStreetAddress(latitude, longitude);
-                Calling.textPhone(DestinationPhone, emergencyMessage, AuthorizedCallerPhone); // Text the emergency contact
-                Calling.createXML(emergencyMessage, "/home/ubuntu/nginx/public/static/call/v1.xml");
-                Calling.callPhone(DestinationPhone, "http://web-host-xml-file", AuthorizedCallerPhone);
-              }
-              rs.close();
-            }
+        }
+        return message;
+    }
+}
           </code>
         </pre>
+          <h3>Automated Calls and Text Messages (Calling.java)</h3>
+          <p>
+        The Java server also sends text messages and phone calls using the <a href="https://www.twilio.com/docs/api/rest" target="_blank">Twilio API</a> with <a href="https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse" target="_blank">reverse geocode</a> latitude, longitude coordinates (for a human-friendly address). 
+        This feature is intended for notifying the emergency contacts of the driver who is involved in an accident and emergency authorities (e.g. 911).
+        </p>
+          <p>Here is how Twilio API is used for making automated calls and sending predefined text messages.</p>
+          
+          <pre class="language-java line-numbers">
+          <code>
+public static final String ACCOUNT_SID = "....";
+public static final String AUTH_TOKEN = "....";
+
+/**
+ * Texts the DestinationPhone from the registered phone number with Twilio
+ * (TwilioAuthorizedCallerPhone), and sends the message that is specified in
+ * textMessage
+ *
+ * @param DestinationPhone
+ * @param textMessage
+ * @param TwilioAuthorizedCallerPhone
+ */
+public static void textPhone(String DestinationPhone, String textMessage, String TwilioAuthorizedCallerPhone) {
+    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    Message message = Message.creator(
+            new PhoneNumber(DestinationPhone),
+            new PhoneNumber(TwilioAuthorizedCallerPhone),
+            textMessage).create();
+}
+
+/**
+ * Calls the DestinationPhone from the registered phone number with Twilio
+ * (TwilioAuthorizedCallerPhone), and speaks the message that is specified
+ * in XML file stored in XMLPath
+ *
+ * @param DestinationPhone
+ * @param XMLpath
+ * @param TwilioAuthorizedCallerPhone
+ */
+public static void callPhone(String DestinationPhone, String XMLpath, String TwilioAuthorizedCallerPhone) {
+    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    try {
+        Call.creator(new PhoneNumber(DestinationPhone), new PhoneNumber(TwilioAuthorizedCallerPhone),
+                new URI(XMLpath)).create();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * Creates XML file on the server. The server uses this XML file
+ * as the input to its automated call.
+ *
+ * @param s Message
+ * @param fileLocation location where the XML file will be created
+ */
+public static void createXML(String s, String fileLocation) {
+    try {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.newDocument(); //
+        Element rootElement = doc.createElement("Response"); // 
+        doc.appendChild(rootElement);
+
+        Element supercar = doc.createElement("Say");
+        rootElement.appendChild(supercar);
+        // setting attribute to element
+        Attr attr = doc.createAttribute("voice");
+        attr.setValue("alice");
+        supercar.setAttributeNode(attr);
+        supercar.appendChild(doc.createTextNode(s));
+        // write the content into xml file
+        TransformerFactory transformerFactory  = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(fileLocation));
+        transformer.transform(source, result);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+          </code>
+        </pre>
+          <h3>Reverse Geocode (ReverseGeocode.java)</h3>
+          <p>Here is how Google reverse geocode is used to get the street address (human readable) from the latitude-longitude coordinates.</p>
+          
+          <pre class="language-java line-numbers">
+          <code>
+private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    InputStream is = new URL(url).openStream();
+    try {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        String jsonText = readAll(bufferedReader);
+        JSONObject json = new JSONObject(jsonText);
+        return json;
+    } finally {
+        is.close();
+    }
+}
+
+public static String getStreetAddress(String latitude, String longitude) throws IOException {
+
+    String googleMapPath = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=our-google-api-key";
+    JSONObject json = readJsonFromUrl(googleMapPath);
+    JSONArray results = (JSONArray) json.get("results");
+    JSONObject firstComponent = (JSONObject) results.get(0);        
+    return firstComponent.get("formatted_address").toString();
+}
+          </code>
+        </pre> 
       </section>
 
       <section>
@@ -259,7 +422,7 @@
         </pre>
         </p>
         <p>
-        I used the <a href="https://yarnpkg.com/en/" target="_blank">Yarn</a> package manager, but you can still use <a href="https://www.npmjs.com" target="_blank">NPM</a>. Below is my manifest.json configuration:
+        We used the <a href="https://yarnpkg.com/en/" target="_blank">Yarn</a> package manager, but you can still use <a href="https://www.npmjs.com" target="_blank">NPM</a>. Below is the manifest.json configuration:
         </p>
         <pre class="language-json line-numbers" data-line="14">
           <code>
@@ -287,7 +450,7 @@
         <h3>Console Webpage (console.html)</h3>
         <p>
         The main portion of the console webpage is a Google map that displays markers in the order of real time data from the NodeJS server. 
-        This is real time interaction is facilitated by a TCP-based connection via socket.io.
+        This real time interaction is facilitated by a TCP-based connection via socket.io.
         The user can also toggle when he wants to view traffic data for the past 24 hours in hourly increments, or select a date range. 
         </p>
         <pre class="language-html line-numbers" data-line="17,40">
@@ -401,8 +564,8 @@
         <section>
         <h3>Putting it Together</h3>
         <p>
-        Run the Java server, run the NodeJS server, then start up the Arduino. Open the console webpage and jolt the Arduino to see the system in action! 
-        Make sure you MySQL database is running and either Apache, Nginx, or and file server is running to serve your XML files if you are using Twilio for phone calls.
+        Run the Java server first, then run the NodeJS server, then start up the Arduino. Open the console webpage and jolt the Arduino to see the system in action! (Make sure you changed the DestinationPhone in Server.java to your cell phone number, so that don't call 911 for this project each time you jold the Arduino!
+        Make sure your MySQL database is running by the way.
         </p>
         <pre class="language-bash command-line" data-user="anrl" data-host="ubuntu-ec2-instance">
           <code>
@@ -416,8 +579,8 @@
         <h3>Concluding Remarks</h3>
         <p>
         This project has been a rewarding experience for all team members.
-        In the future, we consider inplementing connections between the Arduino and Java server as well as the Java server and NodeJS server with UDP. 
-        We may also update the project with additional features, such the ability for a client to track his driving habits (average speeds, turning habits, acceration habitis, etc). 
+        In the future, we consider inplementing connections between the Arduino and Java server as well as the Java server and NodeJS server with UDP, so we can avoild the delay for TCP handshake (connection setup). 
+        We may also update the project with additional features, such the ability for parents to track their children's driving habits (average speeds, turning habits, acceration habitis, etc). 
         </p>
         </section>
 
