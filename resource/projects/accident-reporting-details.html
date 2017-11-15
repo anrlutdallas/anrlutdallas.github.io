@@ -394,7 +394,87 @@ public static String getStreetAddress(String latitude, String longitude) throws 
             }
           </code>
         </pre>
-        </section>
+        
+        <p>
+        The loop is broken out of via an interrupt signal from the Arduino 101, only sent when a crash is detected. 
+        When the interrupt signal is received by the Arduino Uno, the compileData() function is immediately entered.
+        The Arduino Uno then listens for data sent from the Arduino 101 via the I2C protocol. It is listening for 
+        crash G force, the axis of impact, and the type of impact sent from the Arduino 101.
+        
+        <pre class="language-arduino line-numbers">
+          <code>
+            //...
+            while (Wire.available()) { // loop through all but the last
+              char x = Wire.read();    // receive byte as an integer
+              data[dataIndex] = x;
+              dataIndex++;
+            }
+            //...
+          </code>
+        </pre>
+        
+        <p>
+        This data is then compiled into a string along with GPS coordinates inside the compileData() function. The string
+        contains GPS coordinates, speed, G force, axis of impact, type of impact, and total magnitude. This final string is
+        then sent to the Java server and the Arduino Uno enters into its polling loops again.
+        </p>
+        void detectCrash(){
+        
+        <pre class="language-arduino line-numbers">
+          <code>
+          void detectCrash(){
+            if (crashDetected){
+              memcpy(dataToSend,data,lastIndex(data) + 1);
+              fona.TCPsend(dataToSend,lastIndex(data) + 1);
+              Serial.println(dataToSend);
+            }
+            crashDetected = false;
+          }
+          </code>
+        </pre>
+      </section>
+        
+      <section>
+        <h3>Arduino 101 (Arduino_101.ino)</h3>
+        
+        <p>
+        The need for two separate Arduinos is due to the fact that the networking functions block the program from 
+        doing anything else, causing it to potentially miss an accident. Arduinos do not support multithreading so it is
+        necessary to use two separate Arduinos and rely on interrupts. The purpose of the Arduino 101 is to constantly poll 
+        accelerometer data to detect a crash. This polling is independent from the Arduino Uno's networking functions, so there 
+        is no blocking.
+        </p>
+        
+        <pre class="language-arduino line-numbers">
+          <code>
+          void loop() {
+            float gx, gy, gz;   //G-Forces on all axes
+            CurieIMU.readAccelerometerScaled(gx, gy, gz); //Get accelerometer data
+            //...
+          }
+          </code>
+        </pre>
+        
+        <p>
+          If there acceleration on any axis exceeds the crash threshold defined at the beginning of the program,
+          the axis of impact, the max G force, and the shock are all sent to the Arduino Uno via I2C. The Arduino 101 then continues
+          to poll acceleration, repeating the same process.
+        </p>
+        
+        <pre class="language-arduino line-numbers">
+          <code>
+            //...
+            char maxAxis = findMaxAxis(gx,gy,gz); //Finds the axis with highest g-force
+            float gForce = findMaxGForce(gx,gy,gz,maxAxis); //Finds highest g-force
+            memset(gForceChar,0,sizeof(gForceChar));  //Clears gforce array
+            dtostrf(gForce,2,2,gForceChar); //Converts float to array gForce -> gForceChar
+            sendWire(shock,gForceChar,maxAxis,'0'); //Sends data byte by byte to the other Arduino via I2C
+            //...
+          </code>
+        </pre>
+        
+        
+
         
         <section>
         <h3>NodeJS Server (server.js)</h3>
@@ -590,7 +670,8 @@ public static String getStreetAddress(String latitude, String longitude) throws 
         <section>
         <h3>Putting it Together</h3>
         <p>
-        Run the Java server first, then run the NodeJS server, then start up the Arduino. Open the console webpage and jolt the Arduino to see the system in action! (Make sure you changed the DestinationPhone in Server.java to your cell phone number, so that don't call 911 for this project each time you jold the Arduino!
+        Run the Java server first, then run the NodeJS server, then start up the Arduino.
+        Open the console webpage and jolt the Arduino to see the system in action! (Make sure you changed the DestinationPhone in Server.java to your cell phone number, so that don't call 911 for this project each time you jolt the Arduino!
         Make sure your MySQL database is running by the way.
         </p>
         <pre class="language-bash command-line" data-user="anrl" data-host="ubuntu-ec2-instance">
