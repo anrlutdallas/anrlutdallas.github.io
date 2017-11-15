@@ -334,37 +334,63 @@ public static String getStreetAddress(String latitude, String longitude) throws 
       </section>
 
       <section>
-        <h3>Arduino (Arduino_Uno.ino)</h3>
+        <h3>Arduino Uno (Arduino_Uno.ino)</h3>
         <p>
-        The Arduino provides a constant stream of GPS and acceleration information to the Java server. 
-        The majority of connections that the Arduino makes is done through the <a href="https://github.com/adafruit/Adafruit_FONA" target="_blank">Adafruit FONA library</a>.
-        We first establish a connection with the Java server with via TCP socket.
+        There are two Arduinos that run concurrently and asynchrnously. The Arduino Uno is responsible for networking and
+        obtaining GPS data. The majority of connections that the Arduino makes is done through 
+        the <a href="https://github.com/adafruit/Adafruit_FONA" target="_blank">Adafruit FONA library</a>.
+        Before anything can be done, the Arduino must establish a Serial connection with the FONA module.
         </p>
         <pre class="language-arduino line-numbers">
           <code>
-            #include "Adafruit_FONA.h"
-            // ...
-            fonaSerial->begin(PORT);
+           #include <SoftwareSerial.h>
+
+          //Pins used for software serial
+          #define FONA_RX 2
+          #define FONA_TX 3
+          #define FONA_RST 4
+          
+          //SoftwareSerial is used to communicate with FONA
+          SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+          SoftwareSerial *fonaSerial = &fonaSS;
+
+          Adafruit_FONA fona = Adafruit_FONA(FONA_RST); //Fona object
+          //...
+          fonaSerial->begin(4800);
           </code>
         </pre>
+        
         <p>
-        If a connection to the Java server is successfully established, we can start polling for GPS and accelerometer data. 
-        We send 
+        After connection with the FONA Shield, GPS and GPRS are enabled. Then a TCP connection is established with
+        the Java server via TCP.
+        </p>
+        <pre class="language-arduino line-numbers">
+          <code>
+            const char* server = "54.202.247.75";  //IP address of our server
+            const uint16_t port = 43005;  //Port of server
+            //...
+            fona.TCPconnect(server,port);
+          </code>
+        </pre>
+        
+        <p>
+        After successful connection to the server, the Arduino Uno continuously polls for GPS location and speed.
+        If a GPS signal was found, the GPS coordinates and speed are stored into variables. If no GPS signal was found,
+        the approximate GSM coordinates are used instead along with estimated speed. This is the main loop
+        which is only broken when the Arduino 101 sends the intterupt signal.
         </p>
         <pre class="language-arduino line-numbers">
           <code>
             // ...
             fona.enableGPS(true); // Enable GPS
             // ... 
-            fona.getGSMLoc(&latitude, &longitude); // If GPS is unavailable, we can use GSM location instead
-            // ...
-            void detectCrash(){
-              if (crashDetected){
-                memcpy(dataToSend,data,lastIndex(data) + 1);
-                fona.TCPsend(dataToSend,lastIndex(data) + 1);
-                Serial.println(dataToSend); // 128-bit message
-              }
-              crashDetected = false;
+            if (foundGPS){
+              //Stores coordinates and speed into variables
+            }
+            else { 
+              //...
+              fona.getGSMLoc(&latitude, &longitude); // If GPS is unavailable, we can use GSM location instead
+              //Stores GSM coordinates into variables
             }
           </code>
         </pre>
