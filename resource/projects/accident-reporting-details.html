@@ -416,10 +416,8 @@ public static String getStreetAddress(String latitude, String longitude) throws 
         <p>
         This data is then compiled into a string along with GPS coordinates inside the compileData() function. The string
         contains GPS coordinates, speed, G force, axis of impact, type of impact, and total magnitude. This final string is
-        then sent to the Java server and the Arduino Uno enters into its polling loops again.
+        then sent to the Java server and the Arduino Uno enters into its polling loop again.
         </p>
-        void detectCrash(){
-        
         <pre class="language-arduino line-numbers">
           <code>
           void detectCrash(){
@@ -456,7 +454,7 @@ public static String getStreetAddress(String latitude, String longitude) throws 
         </pre>
         
         <p>
-          If there acceleration on any axis exceeds the crash threshold defined at the beginning of the program,
+          If there acceleration on any axis exceeds the crash threshold defined at the beginning of the program, then
           the axis of impact, the max G force, and the shock are all sent to the Arduino Uno via I2C. The Arduino 101 then continues
           to poll acceleration, repeating the same process.
         </p>
