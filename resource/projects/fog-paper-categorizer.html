@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Fog Computing Paper Categorizer | ANRL at UT Dallas</title>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" type="text/css" href="../../assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="../../assets/css/accordion.css" />
+  <link rel="stylesheet" href="../../assets/css/resources.css" />
+  <link rel="stylesheet" href="../../assets/css/table.css" />
+  <link rel="stylesheet" href="accident-reporting.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  <link rel="stylesheet" href="prism.css" />
+   
+</head>
+
+<body class="left-sidebar">
+<!-- start page wrapper -->
+<div id="page-wrapper">
+
+  <!-- header -->
+  <script src="../../assets/js/header.js"></script>
+
+  <!-- start main -->
+  <div class="wrapper style1">
+    <!-- start main container -->
+    <div class="container">
+        
+         <!-- start main content -->
+        <article id="main" class="special">
+
+          <header>
+            <h2>Fog Computing Paper Categorizer</h2>
+            <h3>Automatically find a category for a research paper about fog computng, edge computing, or cloudlet!</h3>
+          </header>
+
+          <section>
+        
+      <p class="summary">
+          As a part of a survey paper (to be published soon), we have developed a software tool based on machine learning that automatically categorizes research papers on fog computing according to <a href="#taxonomy" class="scrolly">our taxonomy</a>. This software is available for public use and has an average classification accuracy of 91%. <a href="#footnote" class="scrolly"><sup>1</sup></a>
+  
+      </p>
+        
+        <a href="fog-paper-categorizer-form.html"><button style="display: block; margin-left: auto;  margin-right: auto;" class="link-button">
+            <i class="fa-3x fa-download" aria-hidden="true"></i>
+            Start Categorizing a Paper
+          </button> 
+          </a>
+              
+              <br/><br />
+      
+      <img src="fog-paper-categorizer-files/fog-wordcloud.png" style="display: block; margin-left: auto;  margin-right: auto;"/>
+         
+              
+                </section>
+            
+            <section id="taxonomy">
+                <h3>Taxonomy of Fog Computing</h3>
+                
+                 <img src="fog-paper-categorizer-files/taxonomy.png" style="display: block; margin-left: auto;  margin-right: auto;"/>
+                <p>This taxonomy categorizes the research articles that focus primarily on fog computing from the networking perspective. This also includes research articles from other similar computing paradigms, such as edge computing, cloudlet, or MEC.</p>
+<p>The “Foundation” category consists of the research papers that either survey the fog computing area, or try to define and standardize the field of fog computing. The “Frameworks and Programming Model” category is where lie research articles that introduce frameworks, architectures, and programming models for fog, or that use fog computing to introduce a new concept (such a vehicular fog computing). The next category is “Design and Planning,” which is about the papers that discuss the design and planning of the network and computing infrastructure. The “Resource Management and Provisioning” category is about the research papers that study the management and provisioning of the resources (e.g., service provisioning, VM placement, control and monitoring). The category “Operation” is about the papers that discuss operational aspects of fog computing systems (e.g., task scheduling, load balancing, and resource discovery). The category “Software and Tools” will list papers that focus on software, simulators, and tools for fog computing. Likewise, the “Hardware and Protocol Stack” category showcases articles that propose a protocol stack or introduce particular hardware for fog computing. Papers that focus on devel- oping testbeds or doing extensive experiments for fog are summarized under the “Testbeds and Experiments” category. Finally, papers discussing security and privacy aspects of fog computing are included under the “Security and Privacy” category.</p>
+                <p></p>
+            </section>
+            
+            
+            <section id="footnote">
+                <p style="font-size: smaller;"> <sup>1</sup> For the purpose of categorizing papers, we have used three supervised text classification methods: Logistic Regression Classifier, Naive Bayes Classifier, and Support Vector Machine (SVM) Classifier. For each cate- gory, the best classifier that fits our data is selected by evaluating the error with train/test data split and cross-validation. The average classification accuracy among categories is 91%.</p>
+            </section>
+            </article>
+        
+      
+    <!-- end main container -->
+    </div>
+  <!-- end main -->
+  </div>
+
+  <!-- footer -->
+  <script src="../../assets/js/footer.js"></script>
+  
+  
+<!-- end page wrapper -->
+</div>
+
+
+<!-- Scripts -->
+<script src="prism.js"></script>
+<script type="text/javascript">
+    // Optional
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+        'remove-trailing': true,
+        'remove-indent': true,
+        'left-trim': true,
+        'right-trim': true,
+    });
+    </script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/jquery.dropotron.min.js"></script>
+<script src="../../assets/js/jquery.scrolly.min.js"></script>
+<script src="../../assets/js/jquery.onvisible.min.js"></script>
+<script src="../../assets/js/skel.min.js"></script>
+<script src="../../assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../assets/js/main.js"></script>
+
+<!-- <script src="../../assets/js/resources.js"></script> -->
+
+
+</body>
+</html>

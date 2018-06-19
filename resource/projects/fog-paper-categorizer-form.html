@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Fog Computing Paper Categorizer Form | ANRL at UT Dallas</title>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="stylesheet" type="text/css" href="../../assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+  <link rel="stylesheet" href="../../assets/css/accordion.css" />
+  <link rel="stylesheet" href="../../assets/css/resources.css" />
+  <link rel="stylesheet" href="../../assets/css/table.css" />
+  <link rel="stylesheet" href="accident-reporting.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  <link rel="stylesheet" href="prism.css" />
+   
+</head>
+
+<body class="left-sidebar">
+<!-- start page wrapper -->
+<div id="page-wrapper">
+
+  <!-- header -->
+  <script src="../../assets/js/header.js"></script>
+
+  <!-- start main -->
+  <div class="wrapper style1">
+    <!-- start main container -->
+    <div class="container">
+        
+         <!-- start main content -->
+        <article id="main" class="special">
+
+          <header>
+            <h2>Fog Computing Paper Categorizer Form</h2>
+            <h3>Automatically find a category for a research paper about fog computng, edge computing, or cloudlet!</h3>
+          </header>
+
+            <a href="fog-paper-categorizer.html"><button class="link-button">
+            <i class="fa" aria-hidden="true"></i>
+            Go back
+          </button> 
+</a>
+          <section>
+        
+      <h4 class="summary">
+          Please enter the paper information in the folowing fields.
+      </h4>
+              <p>The first 2 fields are optional but they help for better categorization!</p>
+              <p>For the last field (Text of paper), you can simply copy-paste the whole text of the paper. We take care of the rest!</p>
+        
+        <!-- Form -->
+
+									<form method="post" action="http://ec2-18-191-142-51.us-east-2.compute.amazonaws.com">
+										<div>
+											<div>
+                                                
+												<input type="text" name="title" id="title" value="" placeholder="[optional] Paper Title" />
+											</div>
+											<div>
+                     
+												<input type="text" name="keywords" id="keywords" value="" placeholder="[optional] Keywords (seperated by comma ',')" />
+											</div>
+											<!-- Break -->
+								
+											<!-- Break -->
+											<div>
+                                               
+												<textarea name="paper-text" id="paper-text" placeholder="[Required] Text of paper" rows="6" required="true"></textarea>
+											</div>
+											<!-- Break -->
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Categorize Paper" class="primary" /></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+            
+            
+              
+              
+            <section id="footnote">
+                
+            </section>
+            </article>
+        
+      
+    <!-- end main container -->
+    </div>
+  <!-- end main -->
+  </div>
+
+  <!-- footer -->
+  <script src="../../assets/js/footer.js"></script>
+  
+  
+<!-- end page wrapper -->
+</div>
+
+
+<!-- Scripts -->
+<script src="prism.js"></script>
+<script type="text/javascript">
+    // Optional
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+        'remove-trailing': true,
+        'remove-indent': true,
+        'left-trim': true,
+        'right-trim': true,
+    });
+    </script>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/jquery.dropotron.min.js"></script>
+<script src="../../assets/js/jquery.scrolly.min.js"></script>
+<script src="../../assets/js/jquery.onvisible.min.js"></script>
+<script src="../../assets/js/skel.min.js"></script>
+<script src="../../assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../assets/js/main.js"></script>
+
+<!-- <script src="../../assets/js/resources.js"></script> -->
+
+
+</body>
+</html>
