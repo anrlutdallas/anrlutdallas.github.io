@@ -11,6 +11,7 @@ document.write('\
         <li>Developed by <a href="/people/caleb.html" target="_blank">Caleb Fung</a> and <a href="/people/ashkan.html" target="_blank">Ashkan Yousefpour</a>.</li>\
         <li><a href="https://html5up.net/" target="_blank">Template by HTML5UP</a></li>\
       </ul>\
+    <a href="https://info.flagcounter.com/HE1C"><img src="https://s04.flagcounter.com/mini/HE1C/bg_F1F2F4/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>\
     </div>\
 \
   <!-- end footer -->\
