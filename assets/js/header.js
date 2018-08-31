@@ -42,6 +42,7 @@ document.write('\
           <li><a href="/resources.html?id=documents#documents">Documents</a></li>\
           <li><a href="/resources.html?id=slides#slides">Slides</a></li>\
           <li><a href="/resources.html?id=whitepapers#whitepapers">White Papers</a></li>\
+          <li><a href="/resources.html?id=courses#courses">Courses</a></li>\
         </ul>\
       </li>\
       <li><a href="/contact.html">Contact</a></li>\
