@@ -15,6 +15,36 @@
   <link rel="stylesheet" href="accident-reporting.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="prism.css" />
+
+    <script type="text/javascript">
+        var year = (new Date()).getFullYear();
+        function getSearchURL(confName){
+            confName = confName.replace(" ", "+");
+            var searchURL = 'https://www.google.com/search?rls=en&q=';
+            return searchURL.concat(confName,'+',year,'&ie=UTF-8&oe=UTF-8'); 
+        }
+        
+        var tableBodies;
+        var tableBody;
+        var rows;
+        var row;
+        var confName;
+        var searchURL;
+        function getSearchURLsOfAllConferences(){
+            tableBodies = document.getElementsByTagName("tbody");
+            for (i = 0; i < tableBodies.length; i++) { 
+                tableBody = tableBodies[i];
+                rows = tableBody.getElementsByTagName("tr");
+                for (j = 0; j < rows.length; j++) {
+                    row = rows[j];
+                    confName = row.getElementsByTagName("b")[0].innerHTML;
+                    searchURL = getSearchURL(confName);
+                    row.getElementsByTagName("a")[0].href = searchURL;
+                }
+            }
+            
+        }
+    </script>
     
     <style type="text/css">
     .conf-title{
@@ -45,7 +75,7 @@
     </style>
 </head>
 
-<body class="left-sidebar">
+<body class="left-sidebar" onload="getSearchURLsOfAllConferences();">
 <!-- start page wrapper -->
 <div id="page-wrapper">
 
@@ -89,31 +119,31 @@
               <tbody>
                 <tr>
                   <td><b>ACM SIGCOMM</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+SIGCOMM&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>August </td>
                 </tr>
                   
                   <tr>
                   <td><b>USENIX NSDI</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=USENIX+NSDI&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>April</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM CoNEXT</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+CoNEXT&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE INFOCOM</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+INFOCOM&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>April</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM SIGMETRICS</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+SIGMETRICS&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
                   
@@ -121,56 +151,56 @@
                   
                   <tr>
                   <td><b>SIGCOMM HotNets</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=SIGCOMM+HotNets&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>USENIX ATC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=USENIX+ATC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM IMC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+IMC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>November</td>
                 </tr>
                   
                   
                   <tr>
                   <td><b>ACM/IEEE ANCS</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM/IEEE+ANCS&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE ICC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+ICC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>May</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE GLOBECOM</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+GLOBECOM&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM/IRTF ANRW</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=acm+anrw&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE ICNP</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+ICNP&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>September</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE/OSA OFC</b></td>
-                  <td><a href="https://www.ofcconference.org/en-us/home/" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>March</td>
                 </tr>
                  
@@ -192,43 +222,43 @@
               <tbody>
                 <tr>
                   <td><b>ACM SoCC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+SOCC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>October</td>
                 </tr>
                   
                   <tr>
                   <td><b>USENIX HotCloud</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=USENIX+HotCloud&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE/ACM UCC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE/ACM+UCC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE IC2E</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+IC2E&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>April</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE Cloud</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+Cloud&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE CloudCom</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+CloudCom&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE FiCloud</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+FiCloud&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>August</td>
                 </tr>
                   
@@ -251,19 +281,19 @@
               <tbody>
                 <tr>
                   <td><b>ACM SOSP</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+SOSP&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>October</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM SenSys</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+SenSys&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>November</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM EuroSys</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+EuroSys&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>April</td>
                 </tr>
                   
@@ -289,81 +319,81 @@
               <tbody>
                 <tr>
                   <td><b>IEEE/ACM SEC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE/ACM+SEC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>October</td>
                 </tr>
                   
                   <tr>
                   <td><b>USENIX HotEdge</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=USENIX+HotEdge&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE EDGE</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+EDGE&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July </td>
                 </tr>
                   
                                     <tr>
                   <td><b>IEEE FMEC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+FMEC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>May</td>
                 </tr>
                   
                   
                   <tr>
                   <td><b>ACM MECOMM</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+MECOMM&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>August</td>
                 </tr>
                   
                 <tr>
                   <td><b>ACM EdgeSys</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+EdgeSys&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
                   
                    
                   <tr>
                   <td><b>Fog World Congress</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=Fog+World+Congress&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>November</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE ICFEC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+ICFEC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>May</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE ICFC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+ICFC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE SmartEdge</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+SmartEdge&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>May</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM/IFIP/USENIX MECC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM/IFIP/USENIX+MECC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>December</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM TOPIC</b></td>
-                  <td><a href="https://synnetsys.github.io/topic2018/" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM CitiFog</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+CitiFog&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>November</td>
                 </tr>
                  
@@ -385,13 +415,13 @@
               <tbody>
                 <tr>
                   <td><b>ACM/IEEE IoTDI</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM/IEEE+IoTDI&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>April</td>
                 </tr>
                   
                    <tr>
                   <td><b>IEEE WF-IoT</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+WF-IoT&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>February</td>
                 </tr>
                 
@@ -414,31 +444,31 @@
               <tbody>
                 <tr>
                   <td><b>ACM MobiHoc</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+MobiHoc&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM MobiCom</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+MobiCom&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>November</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM MobiSys</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+MobiSys&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM HotMobile</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+HotMobile&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>February</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM MobiArch</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+MobiArch&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
 
@@ -460,25 +490,25 @@
               <tbody>
                 <tr>
                   <td><b>ACM PODC</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+PODC&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE ICDCS</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+ICDCS&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>July</td>
                 </tr>
                   
                   <tr>
                   <td><b>IEEE PerCom</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=IEEE+PerCom&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>March</td>
                 </tr>
                   
                   <tr>
                   <td><b>ACM DEBS</b></td>
-                  <td><a href="https://www.google.com/search?client=safari&rls=en&q=ACM+DEBS&ie=UTF-8&oe=UTF-8" target="_blank">Link</a></td>
+                  <td><a target="_blank">Link</a></td>
                   <td>June</td>
                 </tr>
 
